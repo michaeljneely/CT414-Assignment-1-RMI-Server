@@ -1,20 +1,26 @@
 package ie.nuigalway.ct414.assignment1.neelydaly.server;
 
+import ie.nuigalway.ct414.assignment1.neelydaly.common.InvalidOptionNumber;
 import ie.nuigalway.ct414.assignment1.neelydaly.common.Question;
 
 public class MultipleChoiceQuestion implements Question {
 
 	private static final long serialVersionUID = -4368950029656033594L;
 	private int number;
-	private String question;
+	// question text
+	private String detail;
+	// answer texts
 	private String[] options;
-	private int answer;
+	// index of correct answer in the 'options' array
+	private int correctAnswer;
+	private int selectedAnswer;
 	
-	public MultipleChoiceQuestion(int number, String question, String[] options, int answer) {
+	public MultipleChoiceQuestion(int number, String detail, String[] options, int correctAnswer) {
 		this.number = number;
-		this.question = question;
+		this.detail = detail;
 		this.options = options;
-		this.answer = answer;
+		this.correctAnswer = correctAnswer;
+		this.selectedAnswer = -1;
 	}
 
 	@Override
@@ -24,11 +30,7 @@ public class MultipleChoiceQuestion implements Question {
 
 	@Override
 	public String getQuestionDetail() {
-		String detail = "Question: " + this.question + "\nOptions: ";
-		for(int i = 0; i < this.options.length; i++) {
-			detail += "\n" + i +": " + this.options[i];
-		}
-		return detail;
+		return this.detail;
 	}
 
 	@Override
@@ -36,6 +38,18 @@ public class MultipleChoiceQuestion implements Question {
 		return this.options;
 	}
 	
+	public void answer(int answer) throws InvalidOptionNumber{
+		if (answer >= 0 && answer < this.options.length) {
+			this.selectedAnswer = answer;
+		} else throw new InvalidOptionNumber("");
+	}
 	
+	protected int getCorrectAnswer() {
+		return this.correctAnswer;
+	}
+
+	public int getSelectedAnswer() {
+		return this.selectedAnswer;
+	}
 
 }

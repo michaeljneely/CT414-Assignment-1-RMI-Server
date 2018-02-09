@@ -11,9 +11,13 @@ import ie.nuigalway.ct414.assignment1.neelydaly.common.*;
 
 public class ExamEngine implements ExamServer {
 
+	private StudentRegistry studentRegistry;
+	private LogonServer logonServer;
+
     // Constructor is required
     public ExamEngine() {
-        super();
+        this.studentRegistry = new StudentRegistry();
+        this.logonServer = new LogonServer();
     }
 
     // Implement the methods defined in the ExamServer interface...
