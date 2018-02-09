@@ -13,9 +13,9 @@ public class LogonServer {
 	private StudentRegistry registry;
 	
 	public LogonServer() {
-		this.registry = new StudentRegistry();
+		this.registry = new StudentRegistry("");
 	}
-	
+
 	protected String login(int id, String pwd) throws UnauthorizedAccess {
 		Student s = this.registry.getStudent(id);
 		if (s != null && s.getPassword().equals(pwd)) {

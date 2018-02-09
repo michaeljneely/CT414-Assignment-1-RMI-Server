@@ -9,7 +9,7 @@ public class Student {
 	private boolean isLoggedIn;
 	private String token;
 	
-	public Student(int id, String password, String[] modules, String course) {
+	public Student(int id, String password, String course, String[] modules) {
 		this.StudentID = id;
 		this.password = password;
 		this.modules = modules;
