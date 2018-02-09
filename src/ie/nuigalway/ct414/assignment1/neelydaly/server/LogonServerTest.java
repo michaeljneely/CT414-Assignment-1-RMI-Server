@@ -14,6 +14,11 @@ import org.junit.jupiter.api.Test;
 
 class LogonServerTest {
 
+	LogonServer ls;
+	LocalDate laterDate, earlierDate;
+	LocalTime laterTime, earlierTime;
+	
+
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
 	}
@@ -24,6 +29,11 @@ class LogonServerTest {
 
 	@BeforeEach
 	void setUp() throws Exception {
+		ls = new LogonServer();
+		laterDate = LocalDate.now().plusDays(1);
+		laterTime = LocalTime.now().plusHours(1);
+		earlierDate = LocalDate.now().minusDays(1);
+		earlierTime = LocalTime.now().minusHours(1);
 	}
 
 	@AfterEach
@@ -31,13 +41,21 @@ class LogonServerTest {
 	}
 
 	@Test
-	void test() {
-		LogonServer ls = new LogonServer();
-		LocalDate laterDate = LocalDate.now().plusDays(1);
-		LocalTime laterTime = LocalTime.now().plusHours(1);
-		String token = ls.generateToken("13100590", LocalDateTime.of(laterDate, laterTime));
-		assertEquals(ls.isTokenValid("13100590", token), true);
-		
+	void testValidToken() {
+		String token = ls.generateToken("123", LocalDateTime.of(laterDate, laterTime));
+		assertEquals(ls.isTokenValid("123", token), true);	
+	}
+	
+	@Test
+	void testExpiredToken() {
+		String token = ls.generateToken("123", LocalDateTime.of(earlierDate, earlierTime));
+		assertEquals(ls.isTokenValid("123", token), false);	
+	}
+	
+	@Test
+	void testWrongStudentIDToken() {
+		String token = ls.generateToken("124", LocalDateTime.of(laterDate, laterTime));
+		assertEquals(ls.isTokenValid("123", token), false);
 	}
 
 }

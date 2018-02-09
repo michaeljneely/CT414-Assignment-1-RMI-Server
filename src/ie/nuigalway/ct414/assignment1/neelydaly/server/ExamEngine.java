@@ -14,21 +14,15 @@ public class ExamEngine implements ExamServer {
 	private StudentRegistry studentRegistry;
 	private LogonServer logonServer;
 
-    // Constructor is required
     public ExamEngine() {
-        this.studentRegistry = new StudentRegistry();
         this.logonServer = new LogonServer();
     }
 
     // Implement the methods defined in the ExamServer interface...
     // Return an access token that allows access to the server for some time period
-    public int login(int studentid, String password) throws 
+    public String login(int studentid, String password) throws 
                 UnauthorizedAccess, RemoteException {
-
-	// TBD: You need to implement this method!
-	// For the moment method just returns an empty or null value to allow it to compile
-
-	return 0;	
+    			return logonServer.login(studentid, password);
     }
 
     // Return a summary list of Assessments currently available for this studentid

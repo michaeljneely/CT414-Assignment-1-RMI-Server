@@ -13,12 +13,12 @@ public class StudentRegistry {
 		this.registeredStudents.add(s);
 	}
 	
-	protected boolean login(int id, String pwd) {
-		for(Student s: registeredStudents) {
-			if (s.getID() == id && s.getPassword().equals(pwd)) {
-				
+	protected Student getStudent(int id) {
+		for(Student s: this.registeredStudents) {
+			if (s.getID() == id) {
+				return s;
 			}
 		}
-		return false;
+		return null;
 	}
 }
