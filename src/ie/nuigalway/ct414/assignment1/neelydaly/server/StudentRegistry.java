@@ -1,16 +1,15 @@
 package ie.nuigalway.ct414.assignment1.neelydaly.server;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.HashMap;
 
 public class StudentRegistry {
-	private Set<Student> registeredStudents;
+	private HashMap<Integer, Student> registeredStudents;
 	private String dbName;
 	
 	public StudentRegistry(String db) {
 		this.dbName = db;
-		this.registeredStudents = new HashSet<Student>();
+		this.registeredStudents = new HashMap<Integer, Student>();
 		this.loadRegistry();
 	}
 	
@@ -22,20 +21,15 @@ public class StudentRegistry {
 			String pwd = student[1];
 			String course = student[2];
 			String[] modules = student[3].split(",");
-			this.registeredStudents.add(new Student(id, pwd, course, modules));
+			this.registeredStudents.put(id, new Student(id, pwd, course, modules));
 		});
 	}
 	
 	protected void register(Student s) {
-		this.registeredStudents.add(s);
+		this.registeredStudents.put(s.getID(), s);
 	}
 	
 	protected Student getStudent(int id) {
-		for(Student s: this.registeredStudents) {
-			if (s.getID() == id) {
-				return s;
-			}
-		}
-		return null;
+		return this.registeredStudents.get(id);
 	}
 }
