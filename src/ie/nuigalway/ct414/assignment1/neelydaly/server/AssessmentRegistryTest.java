@@ -8,10 +8,10 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class StudentRegistryTest {
+class AssessmentRegistryTest {
 
-	StudentRegistry registry;
-	
+	AssessmentRegistry registry;
+	private static final String testDB = "assessments.txt";
 
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
@@ -23,7 +23,7 @@ class StudentRegistryTest {
 
 	@BeforeEach
 	void setUp() throws Exception {
-		registry = new StudentRegistry("");
+		registry = new AssessmentRegistry(testDB);
 	}
 
 	@AfterEach
@@ -32,7 +32,7 @@ class StudentRegistryTest {
 
 	@Test
 	void test() {
-		assertEquals(registry.getStudent(123).getPassword(), "cats");
+		assertEquals(registry.getAssessment(10001).getAssociatedID(),10001);
 	}
 
 }

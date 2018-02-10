@@ -1,5 +1,7 @@
 package ie.nuigalway.ct414.assignment1.neelydaly.server;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -13,28 +15,24 @@ public class MultipleChoiceAssessment implements Assessment {
 	private static final long serialVersionUID = -6660187375794326772L;
 	private int ID;
 	private String info;
-	private Date startDate;
-	private Date endDate;
+	private LocalDateTime startDate;
+	private LocalDateTime endDate;
 	private HashMap<Integer, MultipleChoiceQuestion> questionList;
-	private Set<Student> eligibleStudents;
+	private String module;
 
-	public MultipleChoiceAssessment(int id, String info, Date startDate, Date endDate, MultipleChoiceQuestion[] questions, Student[] students) {
+	public MultipleChoiceAssessment(int id, String module, String info, LocalDateTime startDate, LocalDateTime endDate, HashMap<Integer, MultipleChoiceQuestion> questions) {
 		this.ID = id;
 		this.info = info;
-		if (endDate.before(startDate)) {
+		this.module = module;
+		if (endDate.isBefore(startDate)) {
 			throw new IllegalArgumentException("Start Date must be before End Date.");
 		}
-		if (questions.length == 0) {
+		if (questions.size() == 0) {
 			throw new IllegalArgumentException("Assessment must contain questions.");
 		}
 		this.startDate = startDate;
 		this.endDate = endDate;
-		for (int i = 0; i < questions.length; i++) {
-			questionList.put(i, questions[i]);
-		}	
-		for (int i = 0; i < students.length; i++) {
-			eligibleStudents.add(students[i]);
-		}
+		this.questionList = questions;
 	}
 
 	@Override
@@ -43,11 +41,11 @@ public class MultipleChoiceAssessment implements Assessment {
 	}
 
 	@Override
-	public Date getClosingDate() {
+	public LocalDateTime getClosingDate() {
 		return this.endDate;
 	}
 	
-	public Date getStartingDate() {
+	public LocalDateTime getStartingDate() {
 		return this.startDate;
 	}
 
@@ -79,13 +77,13 @@ public class MultipleChoiceAssessment implements Assessment {
 		return this.ID;
 	}
 	
-	public boolean isElligible(int studentID) {
-		for(Student s: this.eligibleStudents) {
-			if (s.getID() == studentID) {
-				return true;
-			}
-		}
-		return false;
-	}
+//	public boolean isElligible(int studentID) {
+//		for(Student s: this.eligibleStudents) {
+//			if (s.getID() == studentID) {
+//				return true;
+//			}
+//		}
+//		return false;
+//	}
 
 }

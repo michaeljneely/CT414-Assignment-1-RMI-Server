@@ -11,6 +11,7 @@ import ie.nuigalway.ct414.assignment1.neelydaly.common.*;
 
 public class ExamEngine implements ExamServer {
 
+	private AssessmentRegistry assessmentRegistry;
 	private StudentRegistry studentRegistry;
 	private LogonServer logonServer;
 

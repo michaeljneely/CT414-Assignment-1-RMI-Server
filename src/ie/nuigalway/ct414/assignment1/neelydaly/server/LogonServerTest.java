@@ -43,6 +43,7 @@ class LogonServerTest {
 		} catch (IOException x) {
 		    System.err.format("IOException: %s%n", x);
 		}
+		System.out.println(LocalDateTime.of(LocalDate.of(2018, 3, 4), LocalTime.of(23, 59)));
 	}
 
 	@AfterAll

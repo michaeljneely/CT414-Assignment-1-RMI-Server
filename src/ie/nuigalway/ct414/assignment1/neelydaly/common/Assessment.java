@@ -5,6 +5,7 @@ package ie.nuigalway.ct414.assignment1.neelydaly.common;
 import java.util.Date;
 import java.util.List;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 public interface Assessment extends Serializable {
 
@@ -12,7 +13,7 @@ public interface Assessment extends Serializable {
 	public String getInformation();
 
 	// Return the final date / time for submission of completed assessment
-	public Date getClosingDate();
+	public LocalDateTime getClosingDate();
 
 	// Return a list of all questions and answer options
 	public List<Question> getQuestions();
