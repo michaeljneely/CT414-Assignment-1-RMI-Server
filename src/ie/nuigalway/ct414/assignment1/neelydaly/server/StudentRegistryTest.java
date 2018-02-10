@@ -23,7 +23,7 @@ class StudentRegistryTest {
 
 	@BeforeEach
 	void setUp() throws Exception {
-		registry = new StudentRegistry("");
+		registry = new StudentRegistry("students.txt");
 	}
 
 	@AfterEach
