@@ -12,8 +12,8 @@ public class LogonServer {
 	private static final DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
 	private StudentRegistry registry;
 	
-	public LogonServer() {
-		this.registry = new StudentRegistry("");
+	public LogonServer(String db) {
+		this.registry = new StudentRegistry(db);
 	}
 
 	protected String login(int id, String pwd) throws UnauthorizedAccess {

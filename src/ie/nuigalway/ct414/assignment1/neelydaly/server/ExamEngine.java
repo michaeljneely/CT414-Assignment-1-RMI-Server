@@ -15,7 +15,7 @@ public class ExamEngine implements ExamServer {
 	private LogonServer logonServer;
 
     public ExamEngine() {
-        this.logonServer = new LogonServer();
+        this.logonServer = new LogonServer("students.txt");
     }
 
     // Implement the methods defined in the ExamServer interface...

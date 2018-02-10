@@ -14,16 +14,16 @@ import java.util.Set;
 
 public class StudentRegistry {
 	private Set<Student> registeredStudents;
-	private String path;
+	private String dbName;
 	
-	public StudentRegistry(String path) {
-		this.path = path;
+	public StudentRegistry(String db) {
+		this.dbName = db;
 		this.registeredStudents = new HashSet<Student>();
 		this.loadRegistry();
 	}
 	
 	private void loadRegistry() {
-		Path file = FileSystems.getDefault().getPath(Paths.get(".").toAbsolutePath().normalize().toString(), "students.txt");
+		Path file = FileSystems.getDefault().getPath(Paths.get(".").toAbsolutePath().normalize().toString(), dbName);
 		try (InputStream in = Files.newInputStream(file); BufferedReader reader = new BufferedReader(new InputStreamReader(in))) {
 			 String line = null;
 			 while ((line = reader.readLine()) != null) {
