@@ -10,12 +10,14 @@ import org.apache.commons.lang3.tuple.Pair;
 public class AssessmentRegistry {
 
 	private String dbName;
+	private CourseRegistry courseRegistry;
 	private HashMap<String, MultipleChoiceAssessment> registeredAssessments;
 	
 	
 	public AssessmentRegistry(String db) {
 		this.dbName = db;
 		this.registeredAssessments = new HashMap<String, MultipleChoiceAssessment>();
+		this.courseRegistry = new CourseRegistry(db);
 		this.loadRegistry();
 	}
 	
@@ -49,7 +51,10 @@ public class AssessmentRegistry {
 	}
 	
 	public List<Pair<String,String>> getAssessmentDetailsForStudent(String studentID){
-		return new ArrayList<Pair<String,String>>();
+		this.registeredAssessments.values().forEach(mcq -> {
+			System.out.println(mcq.toString());
+		});
+		return null;
 	}
 	
 	public void submitAssessment(MultipleChoiceAssessment a) {

@@ -1,5 +1,3 @@
-// Question.java
-
 package ie.nuigalway.ct414.assignment1.neelydaly.common;
 
 import java.io.Serializable;

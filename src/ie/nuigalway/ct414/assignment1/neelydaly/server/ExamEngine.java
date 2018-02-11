@@ -14,38 +14,48 @@ import ie.nuigalway.ct414.assignment1.neelydaly.common.*;
 public class ExamEngine implements ExamServer {
 
 	private AssessmentRegistry assessmentRegistry;
-	private StudentRegistry studentRegistry;
 	private LogonServer logonServer;
 
 	public ExamEngine() {
 		super();
 		this.logonServer = new LogonServer("students.txt");
-		this.studentRegistry = new StudentRegistry("students.txt");
 		this.assessmentRegistry = new AssessmentRegistry("assessments.txt");
 	}
 
 	// Returns encoded temporary access token
 	@Override
-	public String login(String studentid, String password) throws  UnauthorizedAccess, RemoteException {
-		return this.logonServer.login(studentid, password);
+	public String login(String studentID, String password) throws  UnauthorizedAccess, RemoteException {
+		return this.logonServer.login(studentID, password);
 	}
 
-	// Return a summary list of Assessments currently available for this studentid
+	// Return a summary list of Assessments currently available for this studentID
 	@Override
-	public List<Pair<String,String>> getAvailableSummary(String token, String studentid) throws UnauthorizedAccess, NoMatchingAssessment, RemoteException {
-		return this.assessmentRegistry.getAssessmentDetailsForStudent(studentid);
+	public List<Pair<String,String>> getAvailableSummary(String token, String studentID) throws UnauthorizedAccess, NoMatchingAssessment, RemoteException {
+		if (this.logonServer.isTokenValid(studentID, token)) {
+			return this.assessmentRegistry.getAssessmentDetailsForStudent(studentID);
+		} else {
+			throw new UnauthorizedAccess("");
+		}
 	}
 
-	// Return an Assessment object associated with a particular course code
+	// Return an Assessment object available for this studentID
 	@Override
-	public Assessment getAssessmentByID(String token, String assessmentID) throws UnauthorizedAccess, NoMatchingAssessment, RemoteException {
-		return this.assessmentRegistry.getAssessmentByID(assessmentID);
+	public Assessment getAssessmentByID(String token, String studentID, String assessmentID) throws UnauthorizedAccess, NoMatchingAssessment, RemoteException {
+		if (this.logonServer.isTokenValid(studentID, token)) {
+			return this.assessmentRegistry.getAssessmentByID(assessmentID);
+		} else {
+			throw new UnauthorizedAccess("");
+		}
 	}
 
 	// Submit a completed assessment
 	@Override
-	public void submitAssessment(String token, Assessment completed) throws  UnauthorizedAccess, NoMatchingAssessment, RemoteException {
-		this.assessmentRegistry.submitAssessment( (MultipleChoiceAssessment) completed);
+	public void submitAssessment(String token, String studentID, Assessment completed) throws  UnauthorizedAccess, NoMatchingAssessment, RemoteException {
+		if (this.logonServer.isTokenValid(studentID, token)) {
+			this.assessmentRegistry.submitAssessment( (MultipleChoiceAssessment) completed);
+		} else {
+			throw new UnauthorizedAccess("");
+		}
 	}
 
 	public static void main(String[] args) {

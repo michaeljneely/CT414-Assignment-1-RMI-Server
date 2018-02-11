@@ -20,7 +20,9 @@ public class LogonServer {
 		Student s = this.registry.getStudent(id);
 		if (s != null && s.getPassword().equals(pwd)) {
 			return this.generateToken(id, LocalDateTime.of(LocalDate.now(), LocalTime.now().plusMinutes(30)));
-		} else throw new UnauthorizedAccess("");
+		} else {
+			throw new UnauthorizedAccess("Incorrect Logon Details");
+		}
 	}
 	
 	protected String generateToken(String id, LocalDateTime expiryDate) {

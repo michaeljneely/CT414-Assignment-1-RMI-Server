@@ -1,11 +1,8 @@
-// Assessment.java 
-
 package ie.nuigalway.ct414.assignment1.neelydaly.common;
 
-import java.util.Date;
-import java.util.List;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 
 public interface Assessment extends Serializable {
 
@@ -19,12 +16,10 @@ public interface Assessment extends Serializable {
 	public List<Question> getQuestions();
 
 	// Return one question only with answer options
-	public Question getQuestion(int questionNumber) throws 
-		InvalidQuestionNumber;
+	public Question getQuestion(int questionNumber) throws InvalidQuestionNumber;
 
 	// Answer a particular question
-	public void selectAnswer(int questionNumber, int optionNumber) throws
-		InvalidQuestionNumber, InvalidOptionNumber;
+	public void selectAnswer(int questionNumber, int optionNumber) throws InvalidQuestionNumber, InvalidOptionNumber;
 
 	// Return selected answer or zero if none selected yet
 	public int getSelectedAnswer(int questionNumber);
@@ -34,6 +29,3 @@ public interface Assessment extends Serializable {
 	public String getAssociatedID();
 
 }
-
-
-
