@@ -1,0 +1,6 @@
+FROM ubuntu:latest
+
+RUN apt-get update && apt-get install -y \ openjdk-8-jre 
+EXPOSE 1099 
+COPY ct414.jar /home/ct414.jar 
+CMD ["java", "-jar", "/home/ct414.jar"]

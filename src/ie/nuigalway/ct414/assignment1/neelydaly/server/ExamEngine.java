@@ -5,11 +5,8 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.ArrayList;
 import java.util.List;
-
 import org.apache.commons.lang3.tuple.Pair;
-
 import ie.nuigalway.ct414.assignment1.neelydaly.common.*;
 
 public class ExamEngine implements ExamServer {
@@ -22,9 +19,9 @@ public class ExamEngine implements ExamServer {
 	public ExamEngine(String logonDB, String studentDB, String assessmentDB, String courseDB) {
 		super();
 		this.logonServer = new LogonServer(logonDB);
-		this.assessments = new AssessmentRegistry(studentDB);
-		this.courses = new CourseRegistry(assessmentDB);
-		this.students = new StudentRegistry(courseDB);
+		this.assessments = new AssessmentRegistry(assessmentDB);
+		this.courses = new CourseRegistry(courseDB);
+		this.students = new StudentRegistry(studentDB);
 	}
 
 	// Returns encoded temporary access token
@@ -69,9 +66,9 @@ public class ExamEngine implements ExamServer {
 	}
 
 	public static void main(String[] args) {
-		if (System.getSecurityManager() == null) {
-			System.setSecurityManager(new SecurityManager());
-		}
+//		if (System.getSecurityManager() == null) {
+//			System.setSecurityManager(new SecurityManager());
+//		}
 		try {
 			String name = "ExamServer";
 //			String logonDB = System.getProperty("LOGON_DB");
@@ -82,10 +79,10 @@ public class ExamEngine implements ExamServer {
 			String studentDB = "students.txt";
 			String courseDB = "courses.txt";
 			String assessmentDB = "assessments.txt";
-			ExamServer engine = new ExamEngine(logonDB, studentDB, courseDB, assessmentDB);
+			ExamServer engine = new ExamEngine(logonDB, studentDB, assessmentDB, courseDB);
 			ExamServer stub =
 					(ExamServer) UnicastRemoteObject.exportObject(engine, 0);
-			Registry registry = LocateRegistry.getRegistry();
+			Registry registry = LocateRegistry.getRegistry("127.0.0.1");
 			registry.rebind(name, stub);
 			System.out.println("ExamEngine bound");
 		} catch (Exception e) {

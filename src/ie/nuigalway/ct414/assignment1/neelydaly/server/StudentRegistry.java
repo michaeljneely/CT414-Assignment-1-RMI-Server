@@ -20,7 +20,6 @@ public class StudentRegistry {
 			String id = student[0];
 			String pwd = student[1];
 			String course = student[2];
-			String[] modules = student[3].split(",");
 			this.registeredStudents.put(id, new Student(id, pwd, course));
 		});
 	}

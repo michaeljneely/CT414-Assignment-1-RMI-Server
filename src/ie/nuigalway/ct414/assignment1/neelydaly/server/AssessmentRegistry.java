@@ -12,14 +12,12 @@ import ie.nuigalway.ct414.assignment1.neelydaly.common.NoMatchingAssessment;
 public class AssessmentRegistry {
 
 	private String dbName;
-	private CourseRegistry courseRegistry;
 	private HashMap<String, MultipleChoiceAssessment> registeredAssessments;
 	
 	
 	public AssessmentRegistry(String db) {
 		this.dbName = db;
 		this.registeredAssessments = new HashMap<String, MultipleChoiceAssessment>();
-		this.courseRegistry = new CourseRegistry(db);
 		this.loadRegistry();
 	}
 	
