@@ -32,7 +32,7 @@ class StudentRegistryTest {
 
 	@Test
 	void test() {
-		assertEquals(registry.getStudent(123).getPassword(), "cats");
+		assertEquals(registry.getStudent("123").getPassword(), "cats");
 	}
 
 }

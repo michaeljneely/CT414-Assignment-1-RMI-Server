@@ -13,14 +13,14 @@ import ie.nuigalway.ct414.assignment1.neelydaly.common.*;
 public class MultipleChoiceAssessment implements Assessment {
 
 	private static final long serialVersionUID = -6660187375794326772L;
-	private int ID;
+	private String ID;
 	private String info;
 	private LocalDateTime startDate;
 	private LocalDateTime endDate;
 	private HashMap<Integer, MultipleChoiceQuestion> questionList;
 	private String module;
 
-	public MultipleChoiceAssessment(int id, String module, String info, LocalDateTime startDate, LocalDateTime endDate, HashMap<Integer, MultipleChoiceQuestion> questions) {
+	public MultipleChoiceAssessment(String id, String module, String info, LocalDateTime startDate, LocalDateTime endDate, HashMap<Integer, MultipleChoiceQuestion> questions) {
 		this.ID = id;
 		this.info = info;
 		this.module = module;
@@ -73,7 +73,7 @@ public class MultipleChoiceAssessment implements Assessment {
 	}
 
 	@Override
-	public int getAssociatedID() {
+	public String getAssociatedID() {
 		return this.ID;
 	}
 	

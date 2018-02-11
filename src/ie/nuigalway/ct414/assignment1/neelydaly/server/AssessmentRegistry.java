@@ -1,30 +1,21 @@
 package ie.nuigalway.ct414.assignment1.neelydaly.server;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.nio.file.FileSystems;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
+
+import org.apache.commons.lang3.tuple.Pair;
 
 public class AssessmentRegistry {
 
 	private String dbName;
-	private HashMap<Integer, MultipleChoiceAssessment> registeredAssessments;
+	private HashMap<String, MultipleChoiceAssessment> registeredAssessments;
 	
 	
 	public AssessmentRegistry(String db) {
 		this.dbName = db;
-		this.registeredAssessments = new HashMap<Integer, MultipleChoiceAssessment>();
+		this.registeredAssessments = new HashMap<String, MultipleChoiceAssessment>();
 		this.loadRegistry();
 	}
 	
@@ -33,7 +24,7 @@ public class AssessmentRegistry {
 		lines.forEach(line -> {
 			int questionCounter = 0;
 			String[] assessment = line.split(";");
-			int ID = Integer.parseInt(assessment[0]);
+			String ID = assessment[0];
 			String module = assessment[1];
 			String info = assessment[2];
 			LocalDateTime startDate = LocalDateTime.parse(assessment[3], Utils.formatter);
@@ -53,7 +44,14 @@ public class AssessmentRegistry {
 		});
 	}
 	
-	public MultipleChoiceAssessment getAssessment(int id) {
+	public MultipleChoiceAssessment getAssessmentByID(String id) {
 		return this.registeredAssessments.get(id);
+	}
+	
+	public List<Pair<String,String>> getAssessmentDetailsForStudent(String studentID){
+		return new ArrayList<Pair<String,String>>();
+	}
+	
+	public void submitAssessment(MultipleChoiceAssessment a) {
 	}
 }

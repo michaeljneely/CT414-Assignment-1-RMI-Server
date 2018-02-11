@@ -18,11 +18,11 @@ public interface ExamServer extends Remote {
 		UnauthorizedAccess, NoMatchingAssessment, RemoteException;
 
 	// Return an Assessment object associated with a particular course code
-	public Assessment getAssessmentById(String token, String studentID, String assessmentID) throws
+	public Assessment getAssessmentByID(String token, String assessmentID) throws
 		UnauthorizedAccess, NoMatchingAssessment, RemoteException;
 
 	// Submit a completed assessment
-	public void submitAssessment(String token, String studentID, Assessment completed) throws 
+	public void submitAssessment(String token, Assessment completed) throws 
 		UnauthorizedAccess, NoMatchingAssessment, RemoteException;
 
 }

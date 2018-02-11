@@ -32,7 +32,7 @@ class AssessmentRegistryTest {
 
 	@Test
 	void test() {
-		assertEquals(registry.getAssessment(10001).getAssociatedID(),10001);
+		assertEquals(registry.getAssessmentByID("10001").getAssociatedID(),"10001");
 	}
 
 }

@@ -2,14 +2,14 @@ package ie.nuigalway.ct414.assignment1.neelydaly.server;
 
 public class Student {
 
-	private int StudentID;
+	private String StudentID;
 	private String password;
 	private String course;
 	private String[] modules;
 	private boolean isLoggedIn;
 	private String token;
 	
-	public Student(int id, String password, String course, String[] modules) {
+	public Student(String id, String password, String course, String[] modules) {
 		this.StudentID = id;
 		this.password = password;
 		this.modules = modules;
@@ -18,7 +18,7 @@ public class Student {
 		this.token = null;
 	}
 	
-	protected int getID() {
+	protected String getID() {
 		return this.StudentID;
 	}
 	

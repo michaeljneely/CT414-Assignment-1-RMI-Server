@@ -16,10 +16,10 @@ public class LogonServer {
 		this.registry = new StudentRegistry(db);
 	}
 
-	protected String login(int id, String pwd) throws UnauthorizedAccess {
+	protected String login(String id, String pwd) throws UnauthorizedAccess {
 		Student s = this.registry.getStudent(id);
 		if (s != null && s.getPassword().equals(pwd)) {
-			return this.generateToken(Integer.toString(id), LocalDateTime.of(LocalDate.now(), LocalTime.now().plusMinutes(30)));
+			return this.generateToken(id, LocalDateTime.of(LocalDate.now(), LocalTime.now().plusMinutes(30)));
 		} else throw new UnauthorizedAccess("");
 	}
 	
