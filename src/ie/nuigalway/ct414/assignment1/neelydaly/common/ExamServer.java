@@ -9,7 +9,7 @@ public interface ExamServer extends Remote {
 	// Return an encoded access token that allows access to the server for some time period
 	public String login(String studentid, String password) throws  UnauthorizedAccess, RemoteException;
 
-	// Return a Summary List of (AssessmentID, AssessmentDetails) pairs
+	// Return a Summary of assessments available for the given student ID
 	public List<AssessmentDetails> getAvailableSummary(String token, String studentID) throws UnauthorizedAccess, NoMatchingAssessment, RemoteException;
 
 	// Return an Assessment object by its unique ID

@@ -1,6 +1,11 @@
-FROM ubuntu:latest
+FROM openjdk:8-jdk
 
-RUN apt-get update && apt-get install -y \ openjdk-8-jre 
-EXPOSE 1099 
-COPY ct414.jar /home/ct414.jar 
-CMD ["java", "-jar", "/home/ct414.jar"]
+RUN git clone https://github.com/michaeljneelysd/CT414-Assignment-1-Server.git
+COPY ./ /usr/src/
+WORKDIR /usr/src/src/ie/nuigalway/ct414/assignment1/neelydaly/
+EXPOSE 1099
+RUN rmiregistry &
+RUN javac common/*.java
+RUN jar cvf ct414.jar common/*.class
+RUN javac -cp ./ct414.jar server/*.java
+CMD ["java", "-classpath", "./ct414.jar", "server/ExamEngine"]
