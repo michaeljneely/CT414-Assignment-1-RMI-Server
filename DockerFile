@@ -1,11 +1,17 @@
-FROM openjdk:8-jdk
+FROM ubuntu
 
-RUN git clone https://github.com/michaeljneelysd/CT414-Assignment-1-Server.git
-COPY ./ /usr/src/
-WORKDIR /usr/src/src/ie/nuigalway/ct414/assignment1/neelydaly/
+RUN apt-get install -y
+RUN apt-get update
+RUN apt-get install -y openjdk-8-jdk
+RUN apt-get install -y apache2
+EXPOSE 80
+CMD apachectl -D FOREGROUND
+COPY ./ /usr/src
+WORKDIR usr/src/src/ie/nuigalway/ct414/assignment1/neelydaly/
 EXPOSE 1099
 RUN rmiregistry &
 RUN javac common/*.java
 RUN jar cvf ct414.jar common/*.class
-RUN javac -cp ./ct414.jar server/*.java
-CMD ["java", "-classpath", "./ct414.jar", "server/ExamEngine"]
+RUN cp ./ct414.jar /var/www/html/
+RUN javac -cp /var/www/html/ct414.jar server/*.java
+CMD ["java", "-classpath", "/var/www/html/ct414.jar", "server/ExamEngine"]
