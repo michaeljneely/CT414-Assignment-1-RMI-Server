@@ -21,7 +21,7 @@ public class StudentRegistry {
 			String pwd = student[1];
 			String course = student[2];
 			String[] modules = student[3].split(",");
-			this.registeredStudents.put(id, new Student(id, pwd, course, modules));
+			this.registeredStudents.put(id, new Student(id, pwd, course));
 		});
 	}
 	
@@ -31,5 +31,9 @@ public class StudentRegistry {
 	
 	protected Student getStudent(String id) {
 		return this.registeredStudents.get(id);
+	}
+	
+	protected boolean exists(String id) {
+		return this.registeredStudents.containsKey(id);
 	}
 }

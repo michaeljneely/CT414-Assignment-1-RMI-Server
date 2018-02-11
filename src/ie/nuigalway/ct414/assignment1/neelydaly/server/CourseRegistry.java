@@ -23,4 +23,8 @@ public class CourseRegistry {
 			this.courseMap.put(course, modules);
 		});
 	}
+	
+	protected String[] getModulesByCourse(String course) {
+		return this.courseMap.get(course);
+	}
 }

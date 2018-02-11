@@ -5,6 +5,7 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang3.tuple.Pair;
@@ -13,26 +14,35 @@ import ie.nuigalway.ct414.assignment1.neelydaly.common.*;
 
 public class ExamEngine implements ExamServer {
 
-	private AssessmentRegistry assessmentRegistry;
 	private LogonServer logonServer;
+	private StudentRegistry students;
+	private AssessmentRegistry assessments;
+	private CourseRegistry courses;
 
-	public ExamEngine() {
+	public ExamEngine(String logonDB, String studentDB, String assessmentDB, String courseDB) {
 		super();
-		this.logonServer = new LogonServer("students.txt");
-		this.assessmentRegistry = new AssessmentRegistry("assessments.txt");
+		this.logonServer = new LogonServer(logonDB);
+		this.assessments = new AssessmentRegistry(studentDB);
+		this.courses = new CourseRegistry(assessmentDB);
+		this.students = new StudentRegistry(courseDB);
 	}
 
 	// Returns encoded temporary access token
 	@Override
 	public String login(String studentID, String password) throws  UnauthorizedAccess, RemoteException {
-		return this.logonServer.login(studentID, password);
+		if (this.students.exists(studentID)) {
+			return this.logonServer.login(studentID, password);
+		} else {
+			throw new UnauthorizedAccess("Logon Details Incorrect");
+		}
 	}
 
 	// Return a summary list of Assessments currently available for this studentID
 	@Override
 	public List<Pair<String,String>> getAvailableSummary(String token, String studentID) throws UnauthorizedAccess, NoMatchingAssessment, RemoteException {
 		if (this.logonServer.isTokenValid(studentID, token)) {
-			return this.assessmentRegistry.getAssessmentDetailsForStudent(studentID);
+			String[] modules = this.courses.getModulesByCourse(this.students.getStudent(studentID).getCourse());
+			return this.assessments.getAssessmentsForModules(modules);
 		} else {
 			throw new UnauthorizedAccess("");
 		}
@@ -42,7 +52,7 @@ public class ExamEngine implements ExamServer {
 	@Override
 	public Assessment getAssessmentByID(String token, String studentID, String assessmentID) throws UnauthorizedAccess, NoMatchingAssessment, RemoteException {
 		if (this.logonServer.isTokenValid(studentID, token)) {
-			return this.assessmentRegistry.getAssessmentByID(assessmentID);
+			return this.assessments.getAssessmentByID(assessmentID);
 		} else {
 			throw new UnauthorizedAccess("");
 		}
@@ -52,7 +62,7 @@ public class ExamEngine implements ExamServer {
 	@Override
 	public void submitAssessment(String token, String studentID, Assessment completed) throws  UnauthorizedAccess, NoMatchingAssessment, RemoteException {
 		if (this.logonServer.isTokenValid(studentID, token)) {
-			this.assessmentRegistry.submitAssessment( (MultipleChoiceAssessment) completed);
+			this.assessments.submitAssessment( (MultipleChoiceAssessment) completed);
 		} else {
 			throw new UnauthorizedAccess("");
 		}
@@ -64,7 +74,15 @@ public class ExamEngine implements ExamServer {
 		}
 		try {
 			String name = "ExamServer";
-			ExamServer engine = new ExamEngine();
+//			String logonDB = System.getProperty("LOGON_DB");
+//			String studentDB = System.getProperty("STUDENT_DB");
+//			String courseDB = System.getProperty("COURSE_DB");
+//			String assessmentDB = System.getProperty("ASSESSMENT_DB");
+			String logonDB = "access.txt";
+			String studentDB = "students.txt";
+			String courseDB = "courses.txt";
+			String assessmentDB = "assessments.txt";
+			ExamServer engine = new ExamEngine(logonDB, studentDB, courseDB, assessmentDB);
 			ExamServer stub =
 					(ExamServer) UnicastRemoteObject.exportObject(engine, 0);
 			Registry registry = LocateRegistry.getRegistry();

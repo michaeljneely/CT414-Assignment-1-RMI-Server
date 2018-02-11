@@ -5,14 +5,12 @@ public class Student {
 	private String StudentID;
 	private String password;
 	private String course;
-	private String[] modules;
 	private boolean isLoggedIn;
 	private String token;
 	
-	public Student(String id, String password, String course, String[] modules) {
+	public Student(String id, String password, String course) {
 		this.StudentID = id;
 		this.password = password;
-		this.modules = modules;
 		this.course = course;
 		this.isLoggedIn = false;
 		this.token = null;
@@ -40,6 +38,10 @@ public class Student {
 	
 	protected String getToken() {
 		return this.token;
+	}
+	
+	protected String getCourse() {
+		return this.course;
 	}
 	
 	protected void setToken(String t) {

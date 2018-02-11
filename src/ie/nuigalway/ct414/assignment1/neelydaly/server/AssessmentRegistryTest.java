@@ -8,6 +8,8 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import ie.nuigalway.ct414.assignment1.neelydaly.common.NoMatchingAssessment;
+
 class AssessmentRegistryTest {
 
 	AssessmentRegistry registry;
@@ -32,7 +34,11 @@ class AssessmentRegistryTest {
 
 	@Test
 	void test() {
-		assertEquals(registry.getAssessmentByID("10001").getAssociatedID(),"10001");
+		try {
+			assertEquals(registry.getAssessmentByID("10001").getAssociatedID(),"10001");
+		} catch (NoMatchingAssessment e) {
+			fail(e);
+		}
 	}
 
 }

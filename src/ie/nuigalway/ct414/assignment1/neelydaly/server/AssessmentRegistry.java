@@ -7,6 +7,8 @@ import java.util.List;
 
 import org.apache.commons.lang3.tuple.Pair;
 
+import ie.nuigalway.ct414.assignment1.neelydaly.common.NoMatchingAssessment;
+
 public class AssessmentRegistry {
 
 	private String dbName;
@@ -46,17 +48,39 @@ public class AssessmentRegistry {
 		});
 	}
 	
-	public MultipleChoiceAssessment getAssessmentByID(String id) {
-		return this.registeredAssessments.get(id);
+	public MultipleChoiceAssessment getAssessmentByID(String id) throws NoMatchingAssessment {
+		MultipleChoiceAssessment assessment = this.registeredAssessments.get(id);
+		if(assessment == null) {
+			throw new NoMatchingAssessment("");
+		}
+		return assessment;
 	}
 	
-	public List<Pair<String,String>> getAssessmentDetailsForStudent(String studentID){
-		this.registeredAssessments.values().forEach(mcq -> {
-			System.out.println(mcq.toString());
+	public List<Pair<String,String>> getAssessmentsForModules(String[] modules) throws NoMatchingAssessment{
+		ArrayList<Pair<String,String>> assessments = new ArrayList<Pair<String,String>>(10);
+		for(String module : modules) {
+			List<MultipleChoiceAssessment> mcqs = this.getAssessmentsForModule(module);
+			for(MultipleChoiceAssessment mcq: mcqs) {
+				assessments.add(Pair.of(mcq.getAssociatedID(), mcq.getInformation()));
+			}
+		}
+		if (assessments.isEmpty()) {
+			throw new NoMatchingAssessment("");
+		}
+		return assessments;
+	}
+	
+	private List<MultipleChoiceAssessment> getAssessmentsForModule(String module) {
+		ArrayList<MultipleChoiceAssessment> assessments = new ArrayList<MultipleChoiceAssessment>();
+		this.registeredAssessments.values().forEach(assessment -> {
+			if(assessment.getModule().equals(module)) {
+				assessments.add(assessment);
+			}
 		});
-		return null;
+		return assessments;
+		
 	}
-	
+
 	public void submitAssessment(MultipleChoiceAssessment a) {
 	}
 }
