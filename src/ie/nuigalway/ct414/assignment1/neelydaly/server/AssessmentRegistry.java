@@ -4,9 +4,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import org.apache.commons.lang3.tuple.Pair;
-
 import ie.nuigalway.ct414.assignment1.neelydaly.common.NoMatchingAssessment;
 
 public class AssessmentRegistry {
@@ -54,12 +51,12 @@ public class AssessmentRegistry {
 		return assessment;
 	}
 	
-	public List<Pair<String,String>> getAssessmentsForModules(String[] modules) throws NoMatchingAssessment{
-		ArrayList<Pair<String,String>> assessments = new ArrayList<Pair<String,String>>(10);
+	public List<MultipleChoiceAssessmentDetails> getAssessmentsForModules(String[] modules) throws NoMatchingAssessment{
+		ArrayList<MultipleChoiceAssessmentDetails> assessments = new ArrayList<MultipleChoiceAssessmentDetails>();
 		for(String module : modules) {
 			List<MultipleChoiceAssessment> mcqs = this.getAssessmentsForModule(module);
 			for(MultipleChoiceAssessment mcq: mcqs) {
-				assessments.add(Pair.of(mcq.getAssociatedID(), mcq.getInformation()));
+				assessments.add(new MultipleChoiceAssessmentDetails(mcq.getAssociatedID(), mcq.getInformation()));
 			}
 		}
 		if (assessments.isEmpty()) {

@@ -5,8 +5,8 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
 import java.util.List;
-import org.apache.commons.lang3.tuple.Pair;
 import ie.nuigalway.ct414.assignment1.neelydaly.common.*;
 
 public class ExamEngine implements ExamServer {
@@ -36,10 +36,10 @@ public class ExamEngine implements ExamServer {
 
 	// Return a summary list of Assessments currently available for this studentID
 	@Override
-	public List<Pair<String,String>> getAvailableSummary(String token, String studentID) throws UnauthorizedAccess, NoMatchingAssessment, RemoteException {
+	public List<AssessmentDetails> getAvailableSummary(String token, String studentID) throws UnauthorizedAccess, NoMatchingAssessment, RemoteException {
 		if (this.logonServer.isTokenValid(studentID, token)) {
 			String[] modules = this.courses.getModulesByCourse(this.students.getStudent(studentID).getCourse());
-			return this.assessments.getAssessmentsForModules(modules);
+			return new ArrayList<AssessmentDetails>(this.assessments.getAssessmentsForModules(modules));
 		} else {
 			throw new UnauthorizedAccess("");
 		}

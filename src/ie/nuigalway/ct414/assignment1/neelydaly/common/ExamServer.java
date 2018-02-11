@@ -3,7 +3,6 @@ package ie.nuigalway.ct414.assignment1.neelydaly.common;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.List;
-import org.apache.commons.lang3.tuple.Pair;
 
 public interface ExamServer extends Remote {
 
@@ -11,7 +10,7 @@ public interface ExamServer extends Remote {
 	public String login(String studentid, String password) throws  UnauthorizedAccess, RemoteException;
 
 	// Return a Summary List of (AssessmentID, AssessmentDetails) pairs
-	public List<Pair<String,String>> getAvailableSummary(String token, String studentID) throws UnauthorizedAccess, NoMatchingAssessment, RemoteException;
+	public List<AssessmentDetails> getAvailableSummary(String token, String studentID) throws UnauthorizedAccess, NoMatchingAssessment, RemoteException;
 
 	// Return an Assessment object by its unique ID
 	public Assessment getAssessmentByID(String token, String studentID, String assessmentID) throws UnauthorizedAccess, NoMatchingAssessment, RemoteException;
