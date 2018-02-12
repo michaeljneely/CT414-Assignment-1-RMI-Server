@@ -1,32 +1,32 @@
-package ie.nuigalway.ct414.assignment1.neelydaly.server;
+package server;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 class StudentRegistryTest {
 
 	StudentRegistry registry;
 	
 
-	@BeforeAll
+	@BeforeClass
 	static void setUpBeforeClass() throws Exception {
 	}
 
-	@AfterAll
+	@AfterClass
 	static void tearDownAfterClass() throws Exception {
 	}
 
-	@BeforeEach
+	@Before
 	void setUp() throws Exception {
 		registry = new StudentRegistry("students.txt");
 	}
 
-	@AfterEach
+	@After
 	void tearDown() throws Exception {
 	}
 

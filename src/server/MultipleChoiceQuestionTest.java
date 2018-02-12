@@ -1,16 +1,15 @@
 /**
  * 
  */
-package ie.nuigalway.ct414.assignment1.neelydaly.server;
+package server;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.jupiter.api.Assertions.*;
-
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import static org.junit.Assert.fail;
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 /**
  * @author michaelneely
@@ -21,28 +20,28 @@ class MultipleChoiceQuestionTest {
 	/**
 	 * @throws java.lang.Exception
 	 */
-	@BeforeAll
+	@BeforeClass
 	static void setUpBeforeClass() throws Exception {
 	}
 
 	/**
 	 * @throws java.lang.Exception
 	 */
-	@AfterAll
+	@AfterClass
 	static void tearDownAfterClass() throws Exception {
 	}
 
 	/**
 	 * @throws java.lang.Exception
 	 */
-	@BeforeEach
+	@Before
 	void setUp() throws Exception {
 	}
 
 	/**
 	 * @throws java.lang.Exception
 	 */
-	@AfterEach
+	@After
 	void tearDown() throws Exception {
 	}
 

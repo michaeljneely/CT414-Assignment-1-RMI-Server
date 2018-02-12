@@ -1,6 +1,4 @@
-package ie.nuigalway.ct414.assignment1.neelydaly.server;
-
-import static org.junit.jupiter.api.Assertions.*;
+package server;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -18,11 +16,13 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 class LogonServerTest {
 
@@ -34,7 +34,7 @@ class LogonServerTest {
 	private static Path file;
 	
 
-	@BeforeAll
+	@BeforeClass
 	static void setUpBeforeClass() throws Exception {
 		file = FileSystems.getDefault().getPath(Paths.get(".").toAbsolutePath().normalize().toString(), testDB);
 		Charset charset = Charset.forName("US-ASCII");
@@ -46,7 +46,7 @@ class LogonServerTest {
 		System.out.println(LocalDateTime.of(LocalDate.of(2018, 3, 4), LocalTime.of(23, 59)));
 	}
 
-	@AfterAll
+	@AfterClass
 	static void tearDownAfterClass() throws Exception {
 		try {
 		    Files.delete(file);
@@ -60,7 +60,7 @@ class LogonServerTest {
 		}
 	}
 
-	@BeforeEach
+	@Before
 	void setUp() throws Exception {
 		ls = new LogonServer(testDB);
 		laterDate = LocalDate.now().plusDays(1);
@@ -69,7 +69,7 @@ class LogonServerTest {
 		earlierTime = LocalTime.now().minusHours(1);
 	}
 
-	@AfterEach
+	@After
 	void tearDown() throws Exception {
 	}
 

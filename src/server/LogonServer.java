@@ -1,4 +1,4 @@
-package ie.nuigalway.ct414.assignment1.neelydaly.server;
+package server;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

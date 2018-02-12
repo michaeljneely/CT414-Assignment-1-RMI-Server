@@ -1,5 +1,5 @@
 
-package ie.nuigalway.ct414.assignment1.neelydaly.server;
+package server;
 
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -76,10 +76,10 @@ public class ExamEngine implements ExamServer {
 //			String studentDB = System.getProperty("STUDENT_DB");
 //			String courseDB = System.getProperty("COURSE_DB");
 //			String assessmentDB = System.getProperty("ASSESSMENT_DB");
-			String logonDB = "access.txt";
-			String studentDB = "students.txt";
-			String courseDB = "courses.txt";
-			String assessmentDB = "assessments.txt";
+			String logonDB = "../access.txt";
+			String studentDB = "../students.txt";
+			String courseDB = "../courses.txt";
+			String assessmentDB = "../assessments.txt";
 			ExamServer engine = new ExamEngine(logonDB, studentDB, assessmentDB, courseDB);
 			ExamServer stub =
 					(ExamServer) UnicastRemoteObject.exportObject(engine, 0);
