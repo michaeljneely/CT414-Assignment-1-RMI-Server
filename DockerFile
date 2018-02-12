@@ -16,4 +16,5 @@ RUN jar cvf ct414.jar ct414/*.class
 EXPOSE 1099
 RUN rmiregistry &
 RUN javac -cp ./ct414.jar:./junit.jar server/*.java
-CMD ["java", "-cp", ":./*.jar", "server/ExamEngine"]
+RUN java -cp :./*.jar -Djava.rmi.server.codebase=./ct414.jar -Djava.security.policy=../server.policy server/ExamEngine
+#CMD ["java", "-cp", ":./*.jar", "-Djava.rmi.server.codebase=./ct414.jar", "-Djava.rmi.server.hostname=localhost", "-Djava.security.policy=../server.policy", "server/ExamEngine"]

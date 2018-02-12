@@ -1,0 +1,3 @@
+grant codeBase "file:/usr/src/src/" {
+    permission java.security.AllPermission;
+};
