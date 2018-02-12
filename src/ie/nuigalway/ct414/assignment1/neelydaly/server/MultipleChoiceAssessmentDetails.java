@@ -1,6 +1,6 @@
 package ie.nuigalway.ct414.assignment1.neelydaly.server;
 
-import ie.nuigalway.ct414.assignment1.neelydaly.common.*;
+import ct414.*;
 
 public class MultipleChoiceAssessmentDetails implements AssessmentDetails{
 

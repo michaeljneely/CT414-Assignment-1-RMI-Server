@@ -1,7 +1,7 @@
 package ie.nuigalway.ct414.assignment1.neelydaly.server;
 
-import ie.nuigalway.ct414.assignment1.neelydaly.common.InvalidOptionNumber;
-import ie.nuigalway.ct414.assignment1.neelydaly.common.Question;
+import ct414.InvalidOptionNumber;
+import ct414.Question;
 
 public class MultipleChoiceQuestion implements Question {
 

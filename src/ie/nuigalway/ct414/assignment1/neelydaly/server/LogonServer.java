@@ -8,7 +8,8 @@ import java.util.ArrayList;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
-import ie.nuigalway.ct414.assignment1.neelydaly.common.UnauthorizedAccess;
+
+import ct414.UnauthorizedAccess;
 
 public class LogonServer {
 	

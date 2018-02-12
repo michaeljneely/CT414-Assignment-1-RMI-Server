@@ -1,4 +1,4 @@
-package ie.nuigalway.ct414.assignment1.neelydaly.common;
+package ct414;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;

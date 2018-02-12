@@ -7,7 +7,8 @@ import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.List;
-import ie.nuigalway.ct414.assignment1.neelydaly.common.*;
+
+import ct414.*;
 
 public class ExamEngine implements ExamServer {
 

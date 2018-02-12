@@ -1,34 +1,35 @@
 package ie.nuigalway.ct414.assignment1.neelydaly.server;
 
-import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
-import ie.nuigalway.ct414.assignment1.neelydaly.common.NoMatchingAssessment;
+import ct414.NoMatchingAssessment;
 
 class AssessmentRegistryTest {
 
 	AssessmentRegistry registry;
 	private static final String testDB = "assessments.txt";
 
-	@BeforeAll
+	@BeforeClass
 	static void setUpBeforeClass() throws Exception {
 	}
 
-	@AfterAll
+	@AfterClass
 	static void tearDownAfterClass() throws Exception {
 	}
 
-	@BeforeEach
+	@Before
 	void setUp() throws Exception {
 		registry = new AssessmentRegistry(testDB);
 	}
 
-	@AfterEach
+	@After
 	void tearDown() throws Exception {
 	}
 
@@ -37,7 +38,7 @@ class AssessmentRegistryTest {
 		try {
 			assertEquals(registry.getAssessmentByID("10001").getAssociatedID(),"10001");
 		} catch (NoMatchingAssessment e) {
-			fail(e);
+			fail(e.getMessage());
 		}
 	}
 

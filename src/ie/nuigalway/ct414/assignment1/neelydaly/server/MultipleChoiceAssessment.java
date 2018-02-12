@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import ie.nuigalway.ct414.assignment1.neelydaly.common.*;
+import ct414.*;
 
 public class MultipleChoiceAssessment implements Assessment {
 
