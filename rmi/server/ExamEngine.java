@@ -77,14 +77,14 @@ public class ExamEngine implements ExamServer {
 //			String studentDB = System.getProperty("STUDENT_DB");
 //			String courseDB = System.getProperty("COURSE_DB");
 //			String assessmentDB = System.getProperty("ASSESSMENT_DB");
-			String logonDB = "../access.txt";
-			String studentDB = "../students.txt";
-			String courseDB = "../courses.txt";
-			String assessmentDB = "../assessments.txt";
+			String logonDB = "access.txt";
+			String studentDB = "students.txt";
+			String courseDB = "courses.txt";
+			String assessmentDB = "assessments.txt";
 			ExamServer engine = new ExamEngine(logonDB, studentDB, assessmentDB, courseDB);
 			ExamServer stub = (ExamServer) UnicastRemoteObject.exportObject(engine, 0);
 			// registry = LocateRegistry.createRegistry(Registry.REGISTRY_PORT);
-			Registry registry = LocateRegistry.getRegistry("127.0.0.1", 1099);
+			Registry registry = LocateRegistry.getRegistry();
 			registry.rebind("ExamServer", stub);
 			System.out.println("ExamEngine bound at" + System.getenv("host_IP"));
 		} catch (Exception e) {
