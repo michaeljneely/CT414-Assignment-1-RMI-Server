@@ -13,4 +13,6 @@ services:
     network_mode: "host"
     environment:
       - SYSTEM_IP=159.65.23.223
+    depends_on:
+      - "apache"
     container_name: "rmi"
