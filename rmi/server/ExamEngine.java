@@ -7,6 +7,7 @@ import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.List;
+import java.net.InetAddress;
 
 import ct414.*;
 
@@ -86,7 +87,7 @@ public class ExamEngine implements ExamServer {
 			// registry = LocateRegistry.createRegistry(Registry.REGISTRY_PORT);
 			Registry registry = LocateRegistry.getRegistry();
 			registry.rebind("ExamServer", stub);
-			System.out.println("ExamEngine bound at" + System.getenv("host_IP"));
+			System.out.println("ExamEngine bound at" + InetAddress.getLocalHost());
 		} catch (Exception e) {
 			System.err.println("ExamEngine exception:");
 			e.printStackTrace();
