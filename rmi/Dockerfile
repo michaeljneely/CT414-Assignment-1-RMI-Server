@@ -1,6 +1,6 @@
 FROM openjdk:8-jdk
 ARG SYSTEM_IP
-ENV SYSTEM_IP=$request_domain
+ENV SYSTEM_IP=$SYSTEM_IP
 COPY ./ ./usr/src/
 WORKDIR /usr/src/
 RUN curl https://search.maven.org/remotecontent?filepath=junit/junit/4.12/junit-4.12.jar > junit.jar
