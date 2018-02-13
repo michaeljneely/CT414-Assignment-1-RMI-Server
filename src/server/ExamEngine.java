@@ -16,6 +16,7 @@ public class ExamEngine implements ExamServer {
 	private StudentRegistry students;
 	private AssessmentRegistry assessments;
 	private CourseRegistry courses;
+	// static Registry registry;
 
 	public ExamEngine(String logonDB, String studentDB, String assessmentDB, String courseDB) {
 		super();
@@ -81,11 +82,11 @@ public class ExamEngine implements ExamServer {
 			String courseDB = "../courses.txt";
 			String assessmentDB = "../assessments.txt";
 			ExamServer engine = new ExamEngine(logonDB, studentDB, assessmentDB, courseDB);
-			ExamServer stub =
-					(ExamServer) UnicastRemoteObject.exportObject(engine, 0);
-			Registry registry = LocateRegistry.getRegistry("127.0.0.1");
-			registry.rebind(name, stub);
-			System.out.println("ExamEngine bound");
+			ExamServer stub = (ExamServer) UnicastRemoteObject.exportObject(engine, 0);
+			// registry = LocateRegistry.createRegistry(Registry.REGISTRY_PORT);
+			Registry registry = LocateRegistry.getRegistry("127.0.0.1", 1099);
+			registry.rebind("ExamServer", stub);
+			System.out.println("ExamEngine bound at" + System.getenv("host_IP"));
 		} catch (Exception e) {
 			System.err.println("ExamEngine exception:");
 			e.printStackTrace();
