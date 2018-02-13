@@ -1,2 +1,4 @@
-bash apache/go.sh
-bash rmi/go.sh
+cd apache
+bash go.sh
+cd ../rmi
+bash go.sh
