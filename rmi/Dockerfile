@@ -1,4 +1,7 @@
-FROM openjdk:8-jdk
+FROM ubuntu
+RUN apt-get install -y
+RUN apt-get update
+RUN apt-get install -y openjdk-8-jdk
 ARG SYSTEM_IP
 COPY ./ ./usr/src/
 WORKDIR /usr/src/
