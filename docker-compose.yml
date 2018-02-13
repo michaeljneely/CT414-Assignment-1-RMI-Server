@@ -3,12 +3,14 @@ services:
   apache: 
     build: ./apache 
     ports: 
-      - "80:80" 
-    container_name: "apache" 
+      - "80:80"
+    net: "host" 
+    container_name: "apache"
   rmi: 
     build: ./rmi 
     ports: 
       - "1099:1099"
+    net: "host"
     environment:
       - SYSTEM_IP=159.65.23.223
     container_name: "rmi"
