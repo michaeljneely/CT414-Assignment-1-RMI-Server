@@ -1,6 +1,10 @@
 FROM openjdk:8-jdk
+ARG SYSTEM_IP
 COPY ./ ./usr/src/
 WORKDIR /usr/src/
+curl https://search.maven.org/remotecontent?filepath=junit/junit/4.12/junit-4.12.jar > junit.jar
+curl https://search.maven.org/remotecontent?filepath=org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar > hamcrest.jar
+curl $SYSTEM_IP/ct414.jar > ct414.jar
 EXPOSE 1099
 RUN rmiregistry &
 RUN javac -cp :./junit.jar:./ct414.jar:./hamcrest.jar server/*.java
