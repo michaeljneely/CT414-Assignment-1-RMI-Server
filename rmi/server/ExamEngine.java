@@ -8,7 +8,6 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.List;
 import java.net.InetAddress;
-
 import ct414.*;
 
 public class ExamEngine implements ExamServer {
@@ -17,7 +16,6 @@ public class ExamEngine implements ExamServer {
 	private StudentRegistry students;
 	private AssessmentRegistry assessments;
 	private CourseRegistry courses;
-	// static Registry registry;
 
 	public ExamEngine(String logonDB, String studentDB, String assessmentDB, String courseDB) {
 		super();
@@ -70,22 +68,17 @@ public class ExamEngine implements ExamServer {
 	}
 
 	public static void main(String[] args) {
-//		if (System.getSecurityManager() == null) {
-//			System.setSecurityManager(new SecurityManager());
-//		}
+		if (System.getSecurityManager() == null) {
+			System.setSecurityManager(new SecurityManager());
+		}
 		try {
 			String name = "ExamServer";
-//			String logonDB = System.getProperty("LOGON_DB");
-//			String studentDB = System.getProperty("STUDENT_DB");
-//			String courseDB = System.getProperty("COURSE_DB");
-//			String assessmentDB = System.getProperty("ASSESSMENT_DB");
 			String logonDB = "access.txt";
 			String studentDB = "students.txt";
 			String assessmentDB = "assessments.txt";
 			String courseDB = "courses.txt";
 			ExamServer engine = new ExamEngine(logonDB, studentDB, assessmentDB, courseDB);
 			ExamServer stub = (ExamServer) UnicastRemoteObject.exportObject(engine, 0);
-			// registry = LocateRegistry.createRegistry(Registry.REGISTRY_PORT);
 			Registry registry = LocateRegistry.getRegistry();
 			registry.rebind("ExamServer", stub);
 			System.out.println("ExamEngine bound at" + InetAddress.getLocalHost());

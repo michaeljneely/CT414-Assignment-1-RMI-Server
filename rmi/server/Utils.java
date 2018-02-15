@@ -15,9 +15,7 @@ public class Utils {
 	
 	public static final DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
 	
-	public Utils() {
-		
-	}
+	public Utils() {}
 	
 	public static ArrayList<String> loadLines(String path) {
 		Path file = FileSystems.getDefault().getPath(Paths.get(".").toAbsolutePath().normalize().toString(), path);

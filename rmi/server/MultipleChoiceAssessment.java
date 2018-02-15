@@ -77,14 +77,5 @@ public class MultipleChoiceAssessment implements Assessment {
 	public String getModule() {
 		return this.module;
 	}
-	
-//	public boolean isElligible(int studentID) {
-//		for(Student s: this.eligibleStudents) {
-//			if (s.getID() == studentID) {
-//				return true;
-//			}
-//		}
-//		return false;
-//	}
 
 }
