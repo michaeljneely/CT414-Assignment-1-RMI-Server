@@ -39,11 +39,11 @@ public class ExamEngine implements ExamServer {
 
 	// Return a summary list of Assessments currently available for this studentID
 	@Override
-	public List<AssessmentDetails> getAvailableSummary(String token) throws UnauthorizedAccess, NoMatchingAssessment, RemoteException {
+	public List<String> getAvailableSummary(String token) throws UnauthorizedAccess, NoMatchingAssessment, RemoteException {
 		if (this.logonServer.isTokenValid(token)) {
 			String studentID = this.logonServer.getStudentIDFromToken(token);
 			String[] modules = this.courses.getModulesByCourse(this.students.getStudent(studentID).getCourse());
-			return new ArrayList<AssessmentDetails>(this.assessments.getAssessmentsForModules(modules));
+			return this.assessments.getAssessmentsForModules(modules);
 		} else {
 			throw new UnauthorizedAccess("");
 		}

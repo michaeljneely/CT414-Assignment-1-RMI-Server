@@ -52,12 +52,12 @@ public class AssessmentRegistry {
 		return assessment;
 	}
 	
-	public List<MultipleChoiceAssessmentDetails> getAssessmentsForModules(String[] modules) throws NoMatchingAssessment{
-		ArrayList<MultipleChoiceAssessmentDetails> assessments = new ArrayList<MultipleChoiceAssessmentDetails>();
+	public List<String> getAssessmentsForModules(String[] modules) throws NoMatchingAssessment{
+		ArrayList<String> assessments = new ArrayList<String>();
 		for(String module : modules) {
 			List<MultipleChoiceAssessment> mcqs = this.getAssessmentsForModule(module);
 			for(MultipleChoiceAssessment mcq: mcqs) {
-				assessments.add(new MultipleChoiceAssessmentDetails(mcq.getAssociatedID(), mcq.getInformation()));
+				assessments.add(mcq.getAssociatedID() + "-" + mcq.getInformation());
 			}
 		}
 		if (assessments.isEmpty()) {
