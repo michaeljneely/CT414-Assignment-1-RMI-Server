@@ -40,7 +40,7 @@ public class AssessmentRegistry {
 				questions.put(questionCounter, question);
 			}
 			questionCounter++;
-			registeredAssessments.put(ID, new MultipleChoiceAssessment(ID, info, module, startDate, endDate, questions));
+			registeredAssessments.put(ID, new MultipleChoiceAssessment(ID, module, info, startDate, endDate, questions));
 		});
 	}
 	
