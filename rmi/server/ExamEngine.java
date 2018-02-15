@@ -43,7 +43,13 @@ public class ExamEngine implements ExamServer {
 		if (this.logonServer.isTokenValid(token)) {
 			String studentID = this.logonServer.getStudentIDFromToken(token);
 			String[] modules = this.courses.getModulesByCourse(this.students.getStudent(studentID).getCourse());
-			return new ArrayList<AssessmentDetails>(this.assessments.getAssessmentsForModules(modules));
+			ArrayList<AssessmentDetails> details = new ArrayList<AssessmentDetails>();
+			ArrayList<MultipleChoiceAssessmentDetails> mcqDetails 
+				= new ArrayList<MultipleChoiceAssessmentDetails>(this.assessments.getAssessmentsForModules(modules));
+			for(MultipleChoiceAssessmentDetails mcqDetail : mcqDetails){
+				details.add((AssessmentDetails) mcqDetail);
+			}
+			return details;
 		} else {
 			throw new UnauthorizedAccess("");
 		}
