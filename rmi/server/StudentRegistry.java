@@ -18,9 +18,9 @@ public class StudentRegistry {
 		lines.forEach(line -> {
 			String[] student = line.split(";");
 			String id = student[0];
-			String pwd = student[1];
-			String course = student[2];
-			this.registeredStudents.put(id, new Student(id, pwd, course));
+			String course = student[1];
+			String res = student[2];
+			this.registeredStudents.put(id, new Student(id, course, res));
 		});
 	}
 	

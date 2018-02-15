@@ -22,9 +22,9 @@ public class ExamEngine implements ExamServer {
 	public ExamEngine(String logonDB, String studentDB, String assessmentDB, String courseDB) {
 		super();
 		this.logonServer = new LogonServer(logonDB);
+		this.students = new StudentRegistry(studentDB);
 		this.assessments = new AssessmentRegistry(assessmentDB);
 		this.courses = new CourseRegistry(courseDB);
-		this.students = new StudentRegistry(studentDB);
 	}
 
 	// Returns encoded temporary access token
@@ -81,8 +81,8 @@ public class ExamEngine implements ExamServer {
 //			String assessmentDB = System.getProperty("ASSESSMENT_DB");
 			String logonDB = "access.txt";
 			String studentDB = "students.txt";
-			String courseDB = "courses.txt";
 			String assessmentDB = "assessments.txt";
+			String courseDB = "courses.txt";
 			ExamServer engine = new ExamEngine(logonDB, studentDB, assessmentDB, courseDB);
 			ExamServer stub = (ExamServer) UnicastRemoteObject.exportObject(engine, 0);
 			// registry = LocateRegistry.createRegistry(Registry.REGISTRY_PORT);

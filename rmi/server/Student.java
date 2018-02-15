@@ -3,14 +3,14 @@ package server;
 public class Student {
 
 	private String StudentID;
-	private String password;
+	private String res;
 	private String course;
 	private boolean isLoggedIn;
 	private String token;
 	
-	public Student(String id, String password, String course) {
+	public Student(String id, String course, String res) {
 		this.StudentID = id;
-		this.password = password;
+		this.res = res;
 		this.course = course;
 		this.isLoggedIn = false;
 		this.token = null;
@@ -20,8 +20,8 @@ public class Student {
 		return this.StudentID;
 	}
 	
-	protected String getPassword() {
-		return this.password;
+	protected String getRes() {
+		return this.res;
 	}
 	
 	protected boolean isLoggedIn() {
