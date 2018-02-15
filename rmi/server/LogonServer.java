@@ -41,11 +41,13 @@ public class LogonServer {
 		return this.encode("" + id + "AAA" + expiryDate.format(formatter) + "");
 	}
 	
-	protected boolean isTokenValid(String id, String token) {
-		String t = this.decode(token);
-		String[] data = t.split("AAA");
-		LocalDateTime expiryDate = LocalDateTime.parse(data[1], formatter);
-		return (LocalDateTime.now().isBefore(expiryDate) && id.equals(data[0]));
+	protected boolean isTokenValid(String token) {
+		LocalDateTime expiryDate = LocalDateTime.parse(this.decode(token).split("AAA")[1], formatter);
+		return (LocalDateTime.now().isBefore(expiryDate));
+	}
+
+	protected String getStudentIDFromToken(String token){
+		return this.decode(token).split("AAA")[0];
 	}
 
 	private String encode(String token) {

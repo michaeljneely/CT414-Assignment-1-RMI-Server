@@ -10,12 +10,12 @@ public interface ExamServer extends Remote {
 	public String login(String studentid, String password) throws  UnauthorizedAccess, RemoteException;
 
 	// Return a Summary of assessments available for the given student ID
-	public List<AssessmentDetails> getAvailableSummary(String token, String studentID) throws UnauthorizedAccess, NoMatchingAssessment, RemoteException;
+	public List<AssessmentDetails> getAvailableSummary(String token) throws UnauthorizedAccess, NoMatchingAssessment, RemoteException;
 
 	// Return an Assessment object by its unique ID
-	public Assessment getAssessmentByID(String token, String studentID, String assessmentID) throws UnauthorizedAccess, NoMatchingAssessment, RemoteException;
+	public Assessment getAssessmentByID(String token, String assessmentID) throws UnauthorizedAccess, NoMatchingAssessment, RemoteException;
 
 	// Submit a completed assessment
-	public void submitAssessment(String token, String studentID, Assessment completed) throws UnauthorizedAccess, NoMatchingAssessment, RemoteException;
+	public String submitAssessment(String token, Assessment completed) throws UnauthorizedAccess, NoMatchingAssessment, RemoteException;
 
 }

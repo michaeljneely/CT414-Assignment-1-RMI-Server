@@ -7,6 +7,10 @@
 # Log file
 *.log
 
+# IntelliJ Files
+.idea/
+*.iml
+
 # Package Files #
 *.jar
 *.war

@@ -39,8 +39,9 @@ public class ExamEngine implements ExamServer {
 
 	// Return a summary list of Assessments currently available for this studentID
 	@Override
-	public List<AssessmentDetails> getAvailableSummary(String token, String studentID) throws UnauthorizedAccess, NoMatchingAssessment, RemoteException {
-		if (this.logonServer.isTokenValid(studentID, token)) {
+	public List<AssessmentDetails> getAvailableSummary(String token) throws UnauthorizedAccess, NoMatchingAssessment, RemoteException {
+		if (this.logonServer.isTokenValid(token)) {
+			String studentID = this.logonServer.getStudentIDFromToken(token);
 			String[] modules = this.courses.getModulesByCourse(this.students.getStudent(studentID).getCourse());
 			return new ArrayList<AssessmentDetails>(this.assessments.getAssessmentsForModules(modules));
 		} else {
@@ -50,8 +51,8 @@ public class ExamEngine implements ExamServer {
 
 	// Return an Assessment object available for this studentID
 	@Override
-	public Assessment getAssessmentByID(String token, String studentID, String assessmentID) throws UnauthorizedAccess, NoMatchingAssessment, RemoteException {
-		if (this.logonServer.isTokenValid(studentID, token)) {
+	public Assessment getAssessmentByID(String token, String assessmentID) throws UnauthorizedAccess, NoMatchingAssessment, RemoteException {
+		if (this.logonServer.isTokenValid(token)) {
 			return this.assessments.getAssessmentByID(assessmentID);
 		} else {
 			throw new UnauthorizedAccess("");
@@ -60,9 +61,9 @@ public class ExamEngine implements ExamServer {
 
 	// Submit a completed assessment
 	@Override
-	public void submitAssessment(String token, String studentID, Assessment completed) throws  UnauthorizedAccess, NoMatchingAssessment, RemoteException {
-		if (this.logonServer.isTokenValid(studentID, token)) {
-			this.assessments.submitAssessment( (MultipleChoiceAssessment) completed);
+	public String submitAssessment(String token, Assessment completed) throws  UnauthorizedAccess, NoMatchingAssessment, RemoteException {
+		if (this.logonServer.isTokenValid(token)) {
+			return this.assessments.submitAssessment( (MultipleChoiceAssessment) completed);
 		} else {
 			throw new UnauthorizedAccess("");
 		}

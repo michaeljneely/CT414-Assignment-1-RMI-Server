@@ -77,6 +77,7 @@ public class AssessmentRegistry {
 		
 	}
 
-	public void submitAssessment(MultipleChoiceAssessment a) {
+	public String submitAssessment(MultipleChoiceAssessment a) {
+		return "Submitted!";
 	}
 }
