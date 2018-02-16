@@ -23,16 +23,31 @@ public class IntegrationTest {
             String assessmentDB = "assessments.txt";
             ExamEngine engine = new ExamEngine(logonDB, studentDB, assessmentDB, courseDB);
             String token = engine.login("1", "a");
-            Assessment assessment1 = engine.getAssessmentByID(token, engine.getAvailableSummary(token).get(0).split("-")[0]);
-            Question question1 = assessment1.getQuestion(0);
-            assessment1.selectAnswer(0,2);
-            String result = engine.submitAssessment(token, assessment1);
+            ArrayList<String> assessmentDetails = new ArrayList<String>(engine.getAvailableSummary(token));
+            assertEquals(assessmentDetails.size(), 2);
+            Assessment assessment1 = engine.getAssessmentByID(token, assessmentDetails.get(0).split("-")[0]);
+            Assessment assessment2 = engine.getAssessmentByID(token, assessmentDetails.get(1).split("-")[0]);
             assertEquals(assessment1.getAssociatedID(), "10001");
-            assertEquals(question1.getQuestionDetail(), "Which of these classes is not included in java.lang?");
+            assertEquals(assessment1.getQuestions().size(), 2);
+            assertEquals(assessment2.getAssociatedID(), "10002");
+            assertEquals(assessment2.getQuestions().size(), 1);
+            Question question11 = assessment1.getQuestion(0);
+            Question question12 = assessment1.getQuestion(1);
+            Question question21 = assessment2.getQuestion(0);
+            assertEquals(question11.getQuestionDetail(), "Which of these classes is not included in java.lang?");
+            assertEquals(question12.getQuestionDetail(), "What does the abstract class in Java mean?");
+            assertEquals(question21.getQuestionDetail(), "How do hard, firm, and soft Real Time Systems differ?");
+            assessment1.selectAnswer(0,2);
+            assessment1.selectAnswer(1,1);
+            assessment2.selectAnswer(0,0);
             assertEquals(assessment1.getSelectedAnswer(0), 2);
-            assertEquals(result, "Submitted!");
+            assertEquals(assessment1.getSelectedAnswer(1), 1);
+            String assessment1Result = engine.submitAssessment(token, assessment1);
+            String assessment2Result = engine.submitAssessment(token, assessment2);
+            assertEquals(assessment1Result, "Submitted!");
+            assertEquals(assessment2Result, "Submitted!");
         } catch(Exception e){
-            fail();
+            fail(e.getMessage());
         }
 
     }

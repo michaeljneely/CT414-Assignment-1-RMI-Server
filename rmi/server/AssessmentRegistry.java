@@ -32,14 +32,14 @@ public class AssessmentRegistry {
 			String[] questionList = assessment[5].split("/");
 			HashMap<Integer, MultipleChoiceQuestion> questions = new HashMap<Integer, MultipleChoiceQuestion>();
 			for(int i = 0; i < questionList.length; i++) {
-				String[] q = questionList[i].split(",");
+				String[] q = questionList[i].split("&");
 				String q_detail = q[0];
 				String[] options = {q[1], q[2], q[3], q[4]};
 				int ans = Integer.parseInt(q[5]);
 				MultipleChoiceQuestion question = new MultipleChoiceQuestion(questionCounter, q_detail, options, ans);
 				questions.put(questionCounter, question);
+				questionCounter++;
 			}
-			questionCounter++;
 			registeredAssessments.put(ID, new MultipleChoiceAssessment(ID, module, info, startDate, endDate, questions));
 		});
 	}
