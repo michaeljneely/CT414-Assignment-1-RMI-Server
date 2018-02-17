@@ -12,4 +12,5 @@ RUN rmiregistry &
 RUN javac -cp :./junit.jar:./ct414.jar:./hamcrest.jar server/*.java
 RUN javac -cp :./junit.jar:./ct414.jar:./hamcrest.jar test/*.java
 RUN java -cp :./ct414.jar:./junit.jar:./hamcrest.jar org.junit.runner.JUnitCore test.IntegrationTest
+RUN truncate -s 0 students.txt
 CMD java -cp :./junit.jar:./ct414.jar:./hamcrest.jar -Djava.rmi.server.codebase=${SYSTEM_IP}/ -Djava.rmi.server.hostname=${SYSTEM_IP} -Djava.security.policy=./server.policy server.ExamEngine
