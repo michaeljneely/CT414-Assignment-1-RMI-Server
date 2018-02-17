@@ -6,4 +6,6 @@ curl https://search.maven.org/remotecontent?filepath=junit/junit/4.12/junit-4.12
 curl https://search.maven.org/remotecontent?filepath=org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar > hamcrest.jar
 javac -cp :../apache/ct414.jar:./junit.jar:./hamcrest.jar server/*.java
 javac -cp :../apache/ct414.jar:./junit.jar:./hamcrest.jar test/*.java
+truncate -s 0 students.txt
 java -cp :../apache/ct414.jar:./junit.jar:./hamcrest.jar org.junit.runner.JUnitCore test.IntegrationTest
+truncate -s 0 students.txt
