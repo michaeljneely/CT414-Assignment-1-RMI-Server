@@ -49,8 +49,8 @@ public class IntegrationTest {
             assertEquals(assessment2.getSelectedAnswer(1), 0);
             String assessment1Result = engine.submitAssessment(token, assessment1);
             String assessment2Result = engine.submitAssessment(token, assessment2);
-            // assertEquals(assessment1Result, "100.00");
-            // assertEqual(assessment2Result, "50.00");
+            assertEquals(assessment1Result, "0.0");
+            assertEquals(assessment2Result, "50.0");
         } catch(Exception e){
             fail(e.getMessage());
         }

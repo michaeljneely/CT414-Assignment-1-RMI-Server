@@ -81,7 +81,24 @@ public class AssessmentRegistry {
 	}
 
 	public MultipleChoiceAssessment markAssessment(MultipleChoiceAssessment assessment) {
-		assessment.setMarks("100");
+		Integer denominator = assessment.getQuestions().size();
+		Integer numerator = 0;
+		ArrayList<MultipleChoiceQuestion> questions = new ArrayList<MultipleChoiceQuestion>();
+		for(Question q: assessment.getQuestions()){
+			questions.add((MultipleChoiceQuestion) q);
+		}
+		for (MultipleChoiceQuestion question : questions) {
+			System.out.println("Selected Answer:" + question.getSelectedAnswer());
+			System.out.println("Correct Answer:" + question.getCorrectAnswer());
+			if (question.getSelectedAnswer() == question.getCorrectAnswer()){
+				System.out.println("One correct!");
+				numerator++;
+			}
+		}
+		Double marks = ((numerator * 1.0)  / (denominator * 1.0)) * 100.00;
+		System.out.println("Marks: " + marks);
+		System.out.println("Marks to String:" + marks.toString());
+		assessment.setMarks(marks.toString());
 		return assessment;
 	}
 }

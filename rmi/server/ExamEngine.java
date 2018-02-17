@@ -48,11 +48,11 @@ public class ExamEngine implements ExamServer {
 			ArrayList<MultipleChoiceAssessment> applicableAssessments = this.assessments.getAssessmentsForModules(modules);
 			HashMap<String, String> summary = new HashMap<String,String>();
 			for (MultipleChoiceAssessment mcq: studentAssessments){
-				summary.put(mcq.getAssociatedID(), new String(mcq.getAssociatedID() + "-" + mcq.getStatus() + "-" + mcq.getMarks() + "-" + mcq.getInformation()));
+				summary.put(mcq.getAssociatedID(), new String(mcq.getAssociatedID() + "-" + mcq.getStatus() + "-" + mcq.getMarks() + "%-" + mcq.getInformation()));
 			}
 			for (MultipleChoiceAssessment mcq: applicableAssessments){
 				if (!summary.containsKey(mcq.getAssociatedID())){
-					summary.put(mcq.getAssociatedID(), new String(mcq.getAssociatedID() + "-" + mcq.getStatus() + "-0-" + mcq.getInformation()));
+					summary.put(mcq.getAssociatedID(), new String(mcq.getAssociatedID() + "-" + mcq.getStatus() + "-Not Submitted-" + mcq.getInformation()));
 				}
 			}
 			System.out.println("returning!");
