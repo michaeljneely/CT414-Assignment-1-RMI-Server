@@ -8,7 +8,7 @@ This server is based on two docker images:
  - [Apache2](https://hub.docker.com/_/httpd/)
  - [Java](https://hub.docker.com/_/openjdk/)
 
-The server begins by starting apache to serve the common interfaces in 'ct414.jar' and the necessary class stubs in 'ct414server.jar'. It then begins the java rmi server on port 1099 and exports and binds the server object.
+The server begins by starting apache to serve the common interfaces in 'ct414.jar' and the necessary class stubs in 'ct414server.jar'. It then begins the java rmi server on port 1099 and exports and binds the server object after a successful run of the test suite.
 
 ## Prerequisites
 - Linux server (preferably Ubuntu)
