@@ -32,7 +32,7 @@ public class ExamEngine implements ExamServer {
 		if (this.students.exists(studentID)) {
 			return this.logonServer.login(studentID, password);
 		} else {
-			throw new UnauthorizedAccess("Logon Details Incorrect");
+			throw new UnauthorizedAccess("Student Does Not Exist");
 		}
 	}
 
