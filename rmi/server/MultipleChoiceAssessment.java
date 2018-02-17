@@ -11,6 +11,7 @@ public class MultipleChoiceAssessment implements Assessment {
 
 	private static final long serialVersionUID = -6660187375794326772L;
 	private String ID;
+	private String marks;
 	private String info;
 	private LocalDateTime startDate;
 	private LocalDateTime endDate;
@@ -21,6 +22,7 @@ public class MultipleChoiceAssessment implements Assessment {
 		this.ID = id;
 		this.info = info;
 		this.module = module;
+		this.marks = "";
 		if (endDate.isBefore(startDate)) {
 			throw new IllegalArgumentException("Start Date must be before End Date.");
 		}
@@ -76,6 +78,18 @@ public class MultipleChoiceAssessment implements Assessment {
 	
 	public String getModule() {
 		return this.module;
+	}
+	
+	protected void setMarks(String marks) {
+		this.marks = marks;
+	}
+	
+	protected String getMarks() {
+		return (this.marks == "") ? "0" : this.marks;
+	}
+	
+	protected String getStatus() {
+		return (this.getClosingDate().isBefore(LocalDateTime.now())) ? "Expired" : "Active";
 	}
 
 }

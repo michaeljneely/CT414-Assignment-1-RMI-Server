@@ -8,6 +8,7 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.List;
 import java.net.InetAddress;
+import java.util.HashMap;
 import ct414.*;
 
 public class ExamEngine implements ExamServer {
@@ -17,10 +18,10 @@ public class ExamEngine implements ExamServer {
 	private AssessmentRegistry assessments;
 	private CourseRegistry courses;
 
-	public ExamEngine(String logonDB, String studentDB, String assessmentDB, String courseDB) {
+	public ExamEngine(String logonDB, String initialStudentDB, String studentDB, String assessmentDB, String courseDB) {
 		super();
 		this.logonServer = new LogonServer(logonDB);
-		this.students = new StudentRegistry(studentDB);
+		this.students = new StudentRegistry(initialStudentDB, studentDB);
 		this.assessments = new AssessmentRegistry(assessmentDB);
 		this.courses = new CourseRegistry(courseDB);
 	}
@@ -28,6 +29,8 @@ public class ExamEngine implements ExamServer {
 	// Returns encoded temporary access token
 	@Override
 	public String login(String studentID, String password) throws  UnauthorizedAccess, RemoteException {
+		System.out.println("Beginning Login Process");
+		System.out.println(this.students.exists(studentID));
 		if (this.students.exists(studentID)) {
 			return this.logonServer.login(studentID, password);
 		} else {
@@ -41,7 +44,19 @@ public class ExamEngine implements ExamServer {
 		if (this.logonServer.isTokenValid(token)) {
 			String studentID = this.logonServer.getStudentIDFromToken(token);
 			String[] modules = this.courses.getModulesByCourse(this.students.getStudent(studentID).getCourse());
-			return this.assessments.getAssessmentsForModules(modules);
+			ArrayList<MultipleChoiceAssessment> studentAssessments = this.students.getStudent(studentID).getCompletedAssessments();
+			ArrayList<MultipleChoiceAssessment> applicableAssessments = this.assessments.getAssessmentsForModules(modules);
+			HashMap<String, String> summary = new HashMap<String,String>();
+			for (MultipleChoiceAssessment mcq: studentAssessments){
+				summary.put(mcq.getAssociatedID(), new String(mcq.getAssociatedID() + "-" + mcq.getStatus() + "-" + mcq.getMarks() + "%-" + mcq.getInformation()));
+			}
+			for (MultipleChoiceAssessment mcq: applicableAssessments){
+				if (!summary.containsKey(mcq.getAssociatedID())){
+					summary.put(mcq.getAssociatedID(), new String(mcq.getAssociatedID() + "-" + mcq.getStatus() + "-Not Submitted-" + mcq.getInformation()));
+				}
+			}
+			System.out.println("returning!");
+			return new ArrayList<String>(summary.values());
 		} else {
 			throw new UnauthorizedAccess("");
 		}
@@ -61,7 +76,16 @@ public class ExamEngine implements ExamServer {
 	@Override
 	public String submitAssessment(String token, Assessment completed) throws  UnauthorizedAccess, NoMatchingAssessment, RemoteException {
 		if (this.logonServer.isTokenValid(token)) {
-			return this.assessments.submitAssessment( (MultipleChoiceAssessment) completed);
+			String studentID = this.logonServer.getStudentIDFromToken(token);
+			MultipleChoiceAssessment completedAssessment = this.assessments.markAssessment( (MultipleChoiceAssessment) completed);
+			String marks = completedAssessment.getMarks();
+			this.students.recordAssessment(studentID, (MultipleChoiceAssessment) completed);
+			try {
+				this.students.writeRegistry();
+			} catch (Exception e){
+				marks = "Error Recording Assessment";
+			}
+			return marks;
 		} else {
 			throw new UnauthorizedAccess("");
 		}
@@ -74,10 +98,11 @@ public class ExamEngine implements ExamServer {
 		try {
 			String name = "ExamServer";
 			String logonDB = "access.txt";
+			String initialStudentDB = "initial-students.txt";
 			String studentDB = "students.txt";
 			String assessmentDB = "assessments.txt";
 			String courseDB = "courses.txt";
-			ExamServer engine = new ExamEngine(logonDB, studentDB, assessmentDB, courseDB);
+			ExamServer engine = new ExamEngine(logonDB, initialStudentDB, studentDB, assessmentDB, courseDB);
 			ExamServer stub = (ExamServer) UnicastRemoteObject.exportObject(engine, 0);
 			Registry registry = LocateRegistry.getRegistry();
 			registry.rebind("ExamServer", stub);
