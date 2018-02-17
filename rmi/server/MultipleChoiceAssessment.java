@@ -57,7 +57,7 @@ public class MultipleChoiceAssessment implements Assessment {
 	public Question getQuestion(int questionNumber) throws InvalidQuestionNumber {
 		if (this.questionList.get(questionNumber) != null) {
 			return this.questionList.get(questionNumber);
-		} else throw new InvalidQuestionNumber("");
+		} else throw new InvalidQuestionNumber("'" + questionNumber + "' is not a valid option");
 	}
 
 	@Override

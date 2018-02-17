@@ -50,7 +50,7 @@ public class AssessmentRegistry {
 			throw new NoMatchingAssessment("Assessment Not Found");
 		}
 		if (assessment.getClosingDate().isBefore(LocalDateTime.now())) {
-			throw new NoMatchingAssessment("AssessmentHasExpired");
+			throw new NoMatchingAssessment("Assessment Has Expired");
 		}
 		return assessment;
 	}

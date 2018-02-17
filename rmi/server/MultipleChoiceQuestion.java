@@ -41,7 +41,7 @@ public class MultipleChoiceQuestion implements Question {
 	public void answer(int answer) throws InvalidOptionNumber{
 		if (answer >= 0 && answer < this.options.length) {
 			this.selectedAnswer = answer;
-		} else throw new InvalidOptionNumber("");
+		} else throw new InvalidOptionNumber("'" + answer + "' is not a valid option");
 	}
 	
 	protected int getCorrectAnswer() {
