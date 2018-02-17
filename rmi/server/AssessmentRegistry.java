@@ -77,7 +77,8 @@ public class AssessmentRegistry {
 		
 	}
 
-	public String submitAssessment(MultipleChoiceAssessment a) {
-		return "Submitted!";
+	public MultipleChoiceAssessment markAssessment(MultipleChoiceAssessment assessment) {
+		assessment.setMarks("100");
+		return assessment;
 	}
 }

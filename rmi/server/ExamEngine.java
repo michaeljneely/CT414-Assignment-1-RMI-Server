@@ -17,10 +17,10 @@ public class ExamEngine implements ExamServer {
 	private AssessmentRegistry assessments;
 	private CourseRegistry courses;
 
-	public ExamEngine(String logonDB, String studentDB, String assessmentDB, String courseDB) {
+	public ExamEngine(String logonDB, String initialStudentDB, String studentDB, String assessmentDB, String courseDB) {
 		super();
 		this.logonServer = new LogonServer(logonDB);
-		this.students = new StudentRegistry(studentDB);
+		this.students = new StudentRegistry(initialStudentDB, studentDB);
 		this.assessments = new AssessmentRegistry(assessmentDB);
 		this.courses = new CourseRegistry(courseDB);
 	}
@@ -42,6 +42,7 @@ public class ExamEngine implements ExamServer {
 			String studentID = this.logonServer.getStudentIDFromToken(token);
 			String[] modules = this.courses.getModulesByCourse(this.students.getStudent(studentID).getCourse());
 			return this.assessments.getAssessmentsForModules(modules);
+			// do something with those here
 		} else {
 			throw new UnauthorizedAccess("");
 		}
@@ -61,7 +62,16 @@ public class ExamEngine implements ExamServer {
 	@Override
 	public String submitAssessment(String token, Assessment completed) throws  UnauthorizedAccess, NoMatchingAssessment, RemoteException {
 		if (this.logonServer.isTokenValid(token)) {
-			return this.assessments.submitAssessment( (MultipleChoiceAssessment) completed);
+			String studentID = this.logonServer.getStudentIDFromToken(token);
+			MultipleChoiceAssessment completedAssessment = this.assessments.markAssessment( (MultipleChoiceAssessment) completed);
+			String marks = completedAssessment.getMarks();
+			this.students.recordAssessment(studentID, (MultipleChoiceAssessment) completed);
+			try {
+				this.students.writeRegistry();
+			} catch (Exception e){
+				marks = "Error Recording Assessment";
+			}
+			return marks;
 		} else {
 			throw new UnauthorizedAccess("");
 		}
@@ -74,10 +84,11 @@ public class ExamEngine implements ExamServer {
 		try {
 			String name = "ExamServer";
 			String logonDB = "access.txt";
+			String initialStudentDB = "initial-students.txt";
 			String studentDB = "students.txt";
 			String assessmentDB = "assessments.txt";
 			String courseDB = "courses.txt";
-			ExamServer engine = new ExamEngine(logonDB, studentDB, assessmentDB, courseDB);
+			ExamServer engine = new ExamEngine(logonDB, initialStudentDB, studentDB, assessmentDB, courseDB);
 			ExamServer stub = (ExamServer) UnicastRemoteObject.exportObject(engine, 0);
 			Registry registry = LocateRegistry.getRegistry();
 			registry.rebind("ExamServer", stub);

@@ -1,50 +1,37 @@
 package server;
 
-public class Student {
+import java.util.HashMap;
+import java.io.Serializable;
+
+public class Student implements Serializable {
 
 	private String StudentID;
-	private String res;
 	private String course;
-	private boolean isLoggedIn;
-	private String token;
+	private HashMap<String, MultipleChoiceAssessment> completedAssessments;
 	
-	public Student(String id, String course, String res) {
+	public Student(String id, String course) {
 		this.StudentID = id;
-		this.res = res;
 		this.course = course;
-		this.isLoggedIn = false;
-		this.token = null;
+		this.completedAssessments = new HashMap<String, MultipleChoiceAssessment>();
 	}
 	
 	protected String getID() {
 		return this.StudentID;
 	}
 	
-	protected String getRes() {
-		return this.res;
+	// protected String getCompletedAssessments() {
+	// 	return this.completedAssessments;
+	// }
+	
+	protected String getMarksForAssessment(String assessmentID) {
+		return this.completedAssessments.get(assessmentID).getMarks();
 	}
 	
-	protected boolean isLoggedIn() {
-		return this.isLoggedIn;
+	protected void addCompletedAssessment(MultipleChoiceAssessment assessment) {
+		this.completedAssessments.put(assessment.getAssociatedID(), assessment);
 	}
-	
-	protected void logon() {
-		this.isLoggedIn = true;
-	}
-	
-	protected void logoff() {
-		this.isLoggedIn = false;
-	}
-	
-	protected String getToken() {
-		return this.token;
-	}
-	
+
 	protected String getCourse() {
 		return this.course;
-	}
-	
-	protected void setToken(String t) {
-		this.token = t;
 	}
 }
