@@ -19,7 +19,6 @@ public class LogonServer {
 	public LogonServer(String db) {
 		this.accessDetails = new HashMap<String,String>();
 		this.loadRegistry(db);
-		System.out.println("Logon Server loaded");
 	}
 	
 	private void loadRegistry(String dbName) {

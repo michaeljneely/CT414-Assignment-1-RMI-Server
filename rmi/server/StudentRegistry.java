@@ -22,7 +22,6 @@ public class StudentRegistry {
 		} catch (Exception e) {
 			this.registeredStudents = new HashMap<String, Student>();
 			if (e.getMessage().equals("No Saved Students!")) {
-				System.out.println("Loading from backup");
 				this.initializeStudents(initialDB);
 			}
 		}

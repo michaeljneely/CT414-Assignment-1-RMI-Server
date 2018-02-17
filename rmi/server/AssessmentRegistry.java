@@ -88,16 +88,11 @@ public class AssessmentRegistry {
 			questions.add((MultipleChoiceQuestion) q);
 		}
 		for (MultipleChoiceQuestion question : questions) {
-			System.out.println("Selected Answer:" + question.getSelectedAnswer());
-			System.out.println("Correct Answer:" + question.getCorrectAnswer());
 			if (question.getSelectedAnswer() == question.getCorrectAnswer()){
-				System.out.println("One correct!");
 				numerator++;
 			}
 		}
 		Double marks = ((numerator * 1.0)  / (denominator * 1.0)) * 100.00;
-		System.out.println("Marks: " + marks);
-		System.out.println("Marks to String:" + marks.toString());
 		assessment.setMarks(marks.toString());
 		return assessment;
 	}

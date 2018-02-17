@@ -29,8 +29,6 @@ public class ExamEngine implements ExamServer {
 	// Returns encoded temporary access token
 	@Override
 	public String login(String studentID, String password) throws  UnauthorizedAccess, RemoteException {
-		System.out.println("Beginning Login Process");
-		System.out.println(this.students.exists(studentID));
 		if (this.students.exists(studentID)) {
 			return this.logonServer.login(studentID, password);
 		} else {
@@ -55,7 +53,6 @@ public class ExamEngine implements ExamServer {
 					summary.put(mcq.getAssociatedID(), new String(mcq.getAssociatedID() + "-" + mcq.getStatus() + "-Not Submitted-" + mcq.getInformation()));
 				}
 			}
-			System.out.println("returning!");
 			return new ArrayList<String>(summary.values());
 		} else {
 			throw new UnauthorizedAccess("");

@@ -25,9 +25,6 @@ public class IntegrationTest {
             ExamEngine engine = new ExamEngine(logonDB, initialStudentDB, studentDB, assessmentDB, courseDB);
             String token = engine.login("1", "a");
             ArrayList<String> assessmentDetails = new ArrayList<String>(engine.getAvailableSummary(token));
-            for (String detail : assessmentDetails){
-                System.out.println(detail);
-            }
             assertEquals(assessmentDetails.size(), 2);
             Assessment assessment1 = engine.getAssessmentByID(token, assessmentDetails.get(0).split("-")[0]);
             Assessment assessment2 = engine.getAssessmentByID(token, assessmentDetails.get(1).split("-")[0]);
