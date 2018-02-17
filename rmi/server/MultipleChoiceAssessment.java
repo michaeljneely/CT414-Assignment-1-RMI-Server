@@ -85,7 +85,11 @@ public class MultipleChoiceAssessment implements Assessment {
 	}
 	
 	protected String getMarks() {
-		return this.marks;
+		return (this.marks == "") ? "0" : this.marks;
+	}
+	
+	protected String getStatus() {
+		return (this.getClosingDate().isBefore(LocalDateTime.now())) ? "Expired" : "Active";
 	}
 
 }

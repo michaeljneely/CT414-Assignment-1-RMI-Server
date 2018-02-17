@@ -2,6 +2,7 @@ package server;
 
 import java.util.HashMap;
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class Student implements Serializable {
 
@@ -19,9 +20,9 @@ public class Student implements Serializable {
 		return this.StudentID;
 	}
 	
-	// protected String getCompletedAssessments() {
-	// 	return this.completedAssessments;
-	// }
+	protected ArrayList<MultipleChoiceAssessment> getCompletedAssessments() {
+		return new ArrayList<MultipleChoiceAssessment>(this.completedAssessments.values());
+	}
 	
 	protected String getMarksForAssessment(String assessmentID) {
 		return this.completedAssessments.get(assessmentID).getMarks();

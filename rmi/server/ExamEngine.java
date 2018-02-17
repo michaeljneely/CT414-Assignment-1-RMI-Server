@@ -8,6 +8,7 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.List;
 import java.net.InetAddress;
+import java.util.HashMap;
 import ct414.*;
 
 public class ExamEngine implements ExamServer {
@@ -28,6 +29,8 @@ public class ExamEngine implements ExamServer {
 	// Returns encoded temporary access token
 	@Override
 	public String login(String studentID, String password) throws  UnauthorizedAccess, RemoteException {
+		System.out.println("Beginning Login Process");
+		System.out.println(this.students.exists(studentID));
 		if (this.students.exists(studentID)) {
 			return this.logonServer.login(studentID, password);
 		} else {
@@ -41,8 +44,19 @@ public class ExamEngine implements ExamServer {
 		if (this.logonServer.isTokenValid(token)) {
 			String studentID = this.logonServer.getStudentIDFromToken(token);
 			String[] modules = this.courses.getModulesByCourse(this.students.getStudent(studentID).getCourse());
-			return this.assessments.getAssessmentsForModules(modules);
-			// do something with those here
+			ArrayList<MultipleChoiceAssessment> studentAssessments = this.students.getStudent(studentID).getCompletedAssessments();
+			ArrayList<MultipleChoiceAssessment> applicableAssessments = this.assessments.getAssessmentsForModules(modules);
+			HashMap<String, String> summary = new HashMap<String,String>();
+			for (MultipleChoiceAssessment mcq: studentAssessments){
+				summary.put(mcq.getAssociatedID(), new String(mcq.getAssociatedID() + "-" + mcq.getStatus() + "-" + mcq.getMarks() + "-" + mcq.getInformation()));
+			}
+			for (MultipleChoiceAssessment mcq: applicableAssessments){
+				if (!summary.containsKey(mcq.getAssociatedID())){
+					summary.put(mcq.getAssociatedID(), new String(mcq.getAssociatedID() + "-" + mcq.getStatus() + "-0-" + mcq.getInformation()));
+				}
+			}
+			System.out.println("returning!");
+			return new ArrayList<String>(summary.values());
 		} else {
 			throw new UnauthorizedAccess("");
 		}

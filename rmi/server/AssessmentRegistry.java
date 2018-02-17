@@ -46,18 +46,21 @@ public class AssessmentRegistry {
 	
 	public MultipleChoiceAssessment getAssessmentByID(String id) throws NoMatchingAssessment {
 		MultipleChoiceAssessment assessment = this.registeredAssessments.get(id);
-		if(assessment == null) {
-			throw new NoMatchingAssessment("");
+		if (assessment == null) {
+			throw new NoMatchingAssessment("Assessment Not Found");
+		}
+		if (assessment.getClosingDate().isBefore(LocalDateTime.now())) {
+			throw new NoMatchingAssessment("AssessmentHasExpired");
 		}
 		return assessment;
 	}
 	
-	public List<String> getAssessmentsForModules(String[] modules) throws NoMatchingAssessment{
-		ArrayList<String> assessments = new ArrayList<String>();
+	public ArrayList<MultipleChoiceAssessment> getAssessmentsForModules(String[] modules) throws NoMatchingAssessment{
+		ArrayList<MultipleChoiceAssessment> assessments = new ArrayList<MultipleChoiceAssessment>();
 		for(String module : modules) {
-			List<MultipleChoiceAssessment> mcqs = this.getAssessmentsForModule(module);
+			ArrayList<MultipleChoiceAssessment> mcqs = this.getAssessmentsForModule(module);
 			for(MultipleChoiceAssessment mcq: mcqs) {
-				assessments.add(mcq.getAssociatedID() + "-" + mcq.getInformation());
+				assessments.add(mcq);
 			}
 		}
 		if (assessments.isEmpty()) {
@@ -66,7 +69,7 @@ public class AssessmentRegistry {
 		return assessments;
 	}
 	
-	private List<MultipleChoiceAssessment> getAssessmentsForModule(String module) {
+	private ArrayList<MultipleChoiceAssessment> getAssessmentsForModule(String module) {
 		ArrayList<MultipleChoiceAssessment> assessments = new ArrayList<MultipleChoiceAssessment>();
 		this.registeredAssessments.values().forEach(assessment -> {
 			if(assessment.getModule().equals(module)) {
